@@ -1,0 +1,2369 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Chatsworth Sign Language — Sept–Oct 2025</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+  }
+  .wrapper {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .card .accent {
+    height: 12px;
+    background: #4A6DA8;
+  }
+  .card h2 {
+    margin: 0;
+    padding: 16px;
+    background: #f1f5f8;
+    font-size: 1.25rem;
+    color: #2c3e50;
+  }
+  .card .content {
+    padding: 16px;
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .item-label {
+    flex: 1;
+    font-weight: bold;
+  }
+  .item-time {
+    margin-left: 5px;
+    font-weight: normal;
+    color: #888;
+  }
+  .item input {
+    flex: 1;
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  @media (max-width: 600px) {
+    .item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .item-label, .item input {
+      width: 100%;
+    }
+    .item input {
+      margin-top: 4px;
+    }
+  }
+
+/* === Responsive scaling additions === */
+:root {
+  /* Base font scales with viewport width between 14px and 16px */
+  --base-fs: clamp(14px, 1.2vw + 10px, 16px);
+  --h2-fs: clamp(18px, 1.6vw + 12px, 24px);
+  --small-fs: clamp(12px, 0.9vw + 8px, 14px);
+}
+
+body {
+  font-size: var(--base-fs);
+}
+
+.wrapper {
+  max-width: 980px;
+  padding: 12px;
+  margin: 0 auto;
+}
+
+.card {
+  margin: clamp(10px, 2vw, 16px) auto;
+}
+
+.card h2 {
+  font-size: var(--h2-fs);
+  line-height: 1.25;
+}
+
+/* Week text follows smaller size */
+.week-text {
+  font-size: var(--small-fs);
+}
+
+/* Make inputs and layout adapt more on narrow screens */
+@media (max-width: 900px) {
+  .narrow-input { width: min(220px, 45vw); }
+}
+
+@media (max-width: 640px) {
+  .item-grid { grid-template-columns: 1fr; }
+  .ritem { justify-content: flex-start; }
+  .narrow-input { width: 50%; max-width: 50%; }
+  .card { margin: 10px 0; }
+  .wrapper { padding: 10px; }
+}
+}
+
+/* High-DPI / very large screens: increase spacing slightly */
+@media (min-width: 1400px) {
+  .wrapper { max-width: 1100px; }
+  .card { margin: 20px auto; }
+}
+
+
+/* Subtle visual polish for various DPIs */
+.card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  border-radius: 10px;
+}
+.accent {
+  height: 6px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+
+/* === Top toolbar === */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  margin: 8px 0 12px 0;
+  border-radius: 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+}
+.topbar .left, .topbar .right { display: flex; align-items: center; gap: 8px; }
+.btn {
+  appearance: none;
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.btn:hover { background: #f4f4f4; }
+.btn-primary { background: #2A6B77; color: #fff; border-color: #2A6B77; }
+.btn-primary:hover { background: #235762; }
+.btn-danger { background: #BF2F13; color: #fff; border-color: #BF2F13; }
+.btn-danger:hover { background: #a2270f; }
+.btn-secondary { background: #3C7F8B; color: #fff; border-color: #3C7F8B; }
+.btn-secondary:hover { background: #336a74; }
+
+@media (max-width: 640px){
+  .topbar { flex-wrap: wrap; gap: 8px; }
+  .topbar .right { margin-left: auto; }
+}
+
+
+/* === Extractor toggle behavior (like Saturday playlist) === */
+.extractor.hidden { display: none; }
+#extractorPanel { margin: 8px 0 12px; border: 1px solid #eee; border-radius: 10px; overflow: hidden; background: #fff; }
+#extractorPanel iframe { display: block; width: 100%; height: min(80vh, 900px); border: 0; }
+
+/* When extractor mode is active, hide everything except the toolbar and extractor panel */
+body.mode-extractor .wrapper > :not(.topbar):not(#extractorPanel) { display: none !important; }
+body.mode-extractor #extractorPanel { display: block !important; }
+
+#weekSelect{border:1px solid #ddd;background:#fff;padding:2px 8px;height:28px;border-radius:6px;}
+.sub-label { font-size: 0.9em; font-style: italic; color: #555; display: block; margin-left: 4px;  font-weight: normal;}
+
+/* Option 2: custom button + dropdown */
+.menu { position: relative; display: inline-block; }
+.menu-btn { border: 1px solid #ddd; border-radius: 8px; background: #fff; padding: .45rem .6rem; cursor: pointer; }
+.menu-btn .icon { margin-right: .35rem; }
+.menu-list { position: absolute; z-index: 50; margin-top: .35rem; list-style: none; padding: .25rem 0; border: 1px solid #ddd; border-radius: 10px; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,.08); min-width: 260px; max-height: 260px; overflow: auto; display: none; }
+.menu-list.show { display: block; }
+.menu-list li { padding: .45rem .7rem; cursor: pointer; }
+.menu-list li:hover { background: #f3f4f6; }
+
+
+/* Option 2 FIX: fixed-position dropdown to avoid clipping */
+.menu-list {
+  position: fixed !important;
+  left: 0; top: 0; /* will be positioned via JS */
+  z-index: 9999 !important;
+}
+
+
+/* Option 2A: Styled native select (fallback-safe) */
+.week-picker.native-like{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .6rem;border:1px solid #ddd;border-radius:8px;background:#fff}
+.week-picker.native-like .icon{font-size:1.1rem;opacity:.9}
+.week-picker.native-like select{border:0;background:transparent;outline:none;min-width:260px}
+
+
+/* Native select hardening */
+.week-picker.native-like{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .6rem;border:1px solid #ddd;border-radius:8px;background:#fff;touch-action:manipulation}
+.week-picker.native-like .icon{font-size:1.1rem;opacity:.9;pointer-events:none}
+.week-picker.native-like select{border:0;background:transparent;outline:none;min-width:260px;appearance:auto;-webkit-appearance:auto;position:relative;z-index:5;pointer-events:auto}
+/* Ensure no parent hides or overlays */
+header, .topHeader, .card, .card .content{overflow:visible !important}
+
+
+/* Hide schedule titles (week date headings inside schedule cards) */
+.schedule .title { display: none !important; }
+
+
+/* Hide header chip that duplicates the week label (keep element for script compatibility) */
+.week-text { display: none !important; }
+
+
+/* Fixed width for week select input */
+/* Fixed width for week select input */
+.week-picker.native-like select {
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+}
+
+
+/* Toggle helper */
+.hidden { display: none !important; }
+
+
+/* --- Extractor clickability hardening --- */
+#btnExtractor, #btnBackFromExtractor, [data-extractor], [data-extractor-back] {
+  pointer-events: auto !important;
+  cursor: pointer;
+}
+.topbar, .toolbar, .controls, .nav, .header-actions {
+  position: relative;
+  z-index: 10;
+}
+#extractorView { display: none; } /* hidden by default; shown via JS */
+
+
+/* --- Clickability hardening for top buttons --- */
+header, .topbar, .toolbar, .header-actions, .nav, .controls {
+  position: relative;
+  z-index: 1000;
+}
+header *,
+.topbar *,
+.toolbar *,
+.header-actions *,
+.nav *,
+.controls * {
+  pointer-events: auto !important;
+}
+/* Neutralize any full-page overlays that might block clicks (unless explicitly shown) */
+.overlay, .cover, .mask, .backdrop {
+  pointer-events: none !important;
+}
+
+</style>
+<style>
+/* Saturday alignment + sizing */
+.item-grid { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 10px; }
+.item-grid .ltxt .item-label { margin-bottom: 2px; }
+.item-grid .ltxt .item-time { color: #666; font-weight: normal; margin-top: 0; font-size: 14px; font-family: Arial, sans-serif; }
+.narrow-input { width: 200px; max-width: 40vw; }
+.ritem { display: flex; align-items: center; justify-content: flex-end; }
+@media (max-width: 640px){
+  .item-grid { grid-template-columns: 1fr; }
+  .ritem { justify-content: flex-start; }
+  .narrow-input { width: 100%; max-width: 100%; }
+}
+.card .content { font-size: 14px; }
+.card .content .item-label { font-size: 14px; }
+
+/* Centered header + small date, with picker */
+#topHeader { text-align: center; }
+.week-text { display: inline-block; margin-top: 4px; font-weight: normal; font-size: 12px; }
+#weekSelect { border: none; background: transparent; width: 1.2em; height: 1.2em; vertical-align: middle; cursor: pointer; }
+#weekPicker::-webkit-calendar-picker-indicator { opacity: 1; cursor: pointer; }
+
+/* Section header colors */
+.treasures .accent { background-color:#3C7F8B; }
+.treasures h2 { color:#2A6B77; }
+.ayf .accent { background-color:#D68F00; }
+.ayf h2 { color:#9B6D17; }
+.living .accent { background-color:#BF2F13; }
+.living h2 { color:#942926; }
+#weekSelect{border:1px solid #ddd;background:#fff;padding:2px 8px;height:28px;border-radius:6px;}
+.sub-label { font-size: 0.9em; font-style: italic; color: #555; display: block; margin-left: 4px;  font-weight: normal;}
+
+/* Option 2: custom button + dropdown */
+.menu { position: relative; display: inline-block; }
+.menu-btn { border: 1px solid #ddd; border-radius: 8px; background: #fff; padding: .45rem .6rem; cursor: pointer; }
+.menu-btn .icon { margin-right: .35rem; }
+.menu-list { position: absolute; z-index: 50; margin-top: .35rem; list-style: none; padding: .25rem 0; border: 1px solid #ddd; border-radius: 10px; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,.08); min-width: 260px; max-height: 260px; overflow: auto; display: none; }
+.menu-list.show { display: block; }
+.menu-list li { padding: .45rem .7rem; cursor: pointer; }
+.menu-list li:hover { background: #f3f4f6; }
+
+
+/* Option 2 FIX: fixed-position dropdown to avoid clipping */
+.menu-list {
+  position: fixed !important;
+  left: 0; top: 0; /* will be positioned via JS */
+  z-index: 9999 !important;
+}
+
+
+/* Option 2A: Styled native select (fallback-safe) */
+.week-picker.native-like{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .6rem;border:1px solid #ddd;border-radius:8px;background:#fff}
+.week-picker.native-like .icon{font-size:1.1rem;opacity:.9}
+.week-picker.native-like select{border:0;background:transparent;outline:none;min-width:260px}
+
+
+/* Native select hardening */
+.week-picker.native-like{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .6rem;border:1px solid #ddd;border-radius:8px;background:#fff;touch-action:manipulation}
+.week-picker.native-like .icon{font-size:1.1rem;opacity:.9;pointer-events:none}
+.week-picker.native-like select{border:0;background:transparent;outline:none;min-width:260px;appearance:auto;-webkit-appearance:auto;position:relative;z-index:5;pointer-events:auto}
+/* Ensure no parent hides or overlays */
+header, .topHeader, .card, .card .content{overflow:visible !important}
+
+
+/* Hide schedule titles (week date headings inside schedule cards) */
+.schedule .title { display: none !important; }
+
+
+/* Hide header chip that duplicates the week label (keep element for script compatibility) */
+.week-text { display: none !important; }
+
+
+/* Fixed width for week select input */
+/* Fixed width for week select input */
+.week-picker.native-like select {
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+}
+
+
+/* Toggle helper */
+.hidden { display: none !important; }
+
+</style>
+<style>
+/* Extractor page styling */
+#extractorView { background:#f7f7f8; min-height:100vh; }
+#extractorView .card { background:#fff; border:1px solid #e5e7eb; border-radius:14px; }
+.wrapper, main { position: relative; z-index: 1; }
+.topbar, .toolbar, .header-actions, .controls { position: relative; z-index: 1000; }
+</style>
+<style id="saveButtonStyle">
+  #btnSaveMain,
+  #btnSave {
+    background-color: #2563eb !important; /* blue-600 */
+    color: #ffffff !important;
+    border: 1px solid #1d4ed8 !important; /* blue-700 */
+  }
+  #btnSaveMain:hover,
+  #btnSave:hover {
+    background-color: #1d4ed8 !important; /* darker on hover */
+  }
+</style>
+<style id="song-fixedwidth-css">
+  :root { --song-input-width: 420px; } /* fallback width */
+  .ritem .song-input {
+    width: var(--song-input-width);
+    max-width: var(--song-input-width);
+    min-width: var(--song-input-width);
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+</style>
+<style id="page-two-col-css">
+  .page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .page-col { display: grid; gap: 16px; }
+  @media (max-width: 900px) { .page-grid { grid-template-columns: 1fr; } }
+</style>
+<style id="media-checklist-css">
+  .checklist { list-style: none; padding-left: 0; margin: 0; display: grid; gap: 6px; }
+  .checklist input[type="checkbox"] { margin-right: 8px; }
+</style>
+<style id="width-normalize-css">
+  /* Ensure all cards inside the 2-col layout span full column width */
+  .page-grid { align-items: start; }
+  .page-col > .card { width: 100% !important; box-sizing: border-box; }
+  .page-col > .card .content { width: 100% !important; box-sizing: border-box; }
+  
+  /* Normalize any nested grids so label/field layout stays consistent */
+  .item-grid { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 10px; }
+  .item-grid .ltxt .item-label { margin-bottom: 2px; }
+  .item-grid .ltxt .item-time { color: #666; font-weight: normal; margin-top: 0; font-size: 14px; font-family: Arial, sans-serif; }
+  .ritem { display: flex; align-items: center; justify-content: flex-end; }
+
+  /* Explicitly target Apply Yourself card by common class names */
+  .card.ayf, .card.apply, .card#ayf, .card[id*="apply"] {
+    width: 100% !important;
+  }
+  .card.ayf .content, .card.apply .content, .card#ayf .content, .card[id*="apply"] .content {
+    width: 100% !important;
+  }
+
+  /* Mobile fallback stays intact */
+  @media (max-width: 640px){
+    .item-grid { grid-template-columns: 1fr; }
+    .ritem { justify-content: flex-start; }
+  }
+</style>
+<style id="card-gap-tighten">
+  .page-col { display: grid; gap: 10px; } /* reduce from 16px to 10px */
+  .card { margin: 0 !important; }         /* remove any card-specific margins */
+</style>
+<style id="card-gap-adjust">
+  .page-col { gap: 14px; } /* increase slightly from 10px */
+</style>
+<style id="media-checklist-iframe-css">
+  .media-checklist .content { padding: 0; }
+  .media-checklist .content iframe {
+    width: 100%;
+    height: 1200px; /* resized for desktop */
+    border: none;
+    border-radius: 14px;
+    display: block;
+  }
+  @media (max-width: 900px){
+    .media-checklist .content iframe { height: 1100px; }
+  }
+</style>
+<style id="hide-extractor-button">
+/* Soft-hide the Extractor button without touching layout or other buttons */
+#btnExtractor,
+[data-extractor],
+button[aria-label="Extractor"] {
+  display: none !important;
+}
+</style></head>
+<body>
+<!-- Embedded Extractor (data-URI) -->
+<section aria-label="Extractor Page" class="hidden" id="extractorView" style="margin:8px 0 12px;">
+<div class="card" style="max-width:960px;margin:0 auto;padding:12px 16px 16px;">
+<div class="accent" style="height:10px;border-radius:10px 10px 0 0;margin:-12px -16px 12px -16px; background:linear-gradient(90deg,#2563eb,#10b981,#14b8a6)"></div>
+<div style="display:flex;justify-content:flex-start;margin-bottom:8px;">
+<button class="btn" id="btnBackFromExtractor">Back</button>
+</div>
+<iframe allow="clipboard-read; clipboard-write" id="extractorFrame" scrolling="auto" src="extractor.html" style="width:100%;height:80vh;border:0;display:block;border-radius:10px;"></iframe>
+</div>
+</section>
+<div id="appRoot">
+<datalist id="songs161">
+<option value="1 — Jehovah’s Attributes">1 — Jehovah’s Attributes</option>
+<option value="2 — Jehovah Is Your Name">2 — Jehovah Is Your Name</option>
+<option value="3 — Our Strength, Our Hope, Our Confidence">3 — Our Strength, Our Hope, Our Confidence</option>
+<option value="4 — “Jehovah Is My Shepherd”">4 — “Jehovah Is My Shepherd”</option>
+<option value="5 — God’s Wondrous Works">5 — God’s Wondrous Works</option>
+<option value="6 — The Heavens Declare God’s Glory">6 — The Heavens Declare God’s Glory</option>
+<option value="7 — Jehovah, Our Strength">7 — Jehovah, Our Strength</option>
+<option value="8 — Jehovah Is Our Refuge">8 — Jehovah Is Our Refuge</option>
+<option value="9 — Jehovah Is Our King!">9 — Jehovah Is Our King!</option>
+<option value="10 — Praise Jehovah Our God!">10 — Praise Jehovah Our God!</option>
+<option value="11 — Creation Praises God">11 — Creation Praises God</option>
+<option value="12 — Great God, Jehovah">12 — Great God, Jehovah</option>
+<option value="13 — Christ, Our Model">13 — Christ, Our Model</option>
+<option value="14 — Praising Earth’s New King">14 — Praising Earth’s New King</option>
+<option value="15 — Praise Jehovah’s Firstborn!">15 — Praise Jehovah’s Firstborn!</option>
+<option value="16 — Praise Jah for His Son, the Anointed">16 — Praise Jah for His Son, the Anointed</option>
+<option value="17 — “I Want To”">17 — “I Want To”</option>
+<option value="18 — Grateful for the Ransom">18 — Grateful for the Ransom</option>
+<option value="19 — The Lord’s Evening Meal">19 — The Lord’s Evening Meal</option>
+<option value="20 — You Gave Your Precious Son">20 — You Gave Your Precious Son</option>
+<option value="21 — Keep On Seeking First the Kingdom">21 — Keep On Seeking First the Kingdom</option>
+<option value="22 — The Kingdom Is in Place—Let It Come!">22 — The Kingdom Is in Place—Let It Come!</option>
+<option value="23 — Jehovah Begins His Rule">23 — Jehovah Begins His Rule</option>
+<option value="24 — Come to Jehovah’s Mountain">24 — Come to Jehovah’s Mountain</option>
+<option value="25 — A Special Possession">25 — A Special Possession</option>
+<option value="26 — You Did It for Me">26 — You Did It for Me</option>
+<option value="27 — The Revealing of God’s Sons">27 — The Revealing of God’s Sons</option>
+<option value="28 — Gaining Jehovah’s Friendship">28 — Gaining Jehovah’s Friendship</option>
+<option value="29 — Living Up to Our Name">29 — Living Up to Our Name</option>
+<option value="30 — My Father, My God and Friend">30 — My Father, My God and Friend</option>
+<option value="31 — Oh, Walk With God!">31 — Oh, Walk With God!</option>
+<option value="32 — Take Sides With Jehovah!">32 — Take Sides With Jehovah!</option>
+<option value="33 — Throw Your Burden on Jehovah">33 — Throw Your Burden on Jehovah</option>
+<option value="34 — Walking in Integrity">34 — Walking in Integrity</option>
+<option value="35 — “Make Sure of the More Important Things”">35 — “Make Sure of the More Important Things”</option>
+<option value="36 — We Guard Our Hearts">36 — We Guard Our Hearts</option>
+<option value="37 — Serving Jehovah Whole-Souled">37 — Serving Jehovah Whole-Souled</option>
+<option value="38 — He Will Make You Strong">38 — He Will Make You Strong</option>
+<option value="39 — Make a Good Name With God">39 — Make a Good Name With God</option>
+<option value="40 — To Whom Do We Belong?">40 — To Whom Do We Belong?</option>
+<option value="41 — Please Hear My Prayer">41 — Please Hear My Prayer</option>
+<option value="42 — The Prayer of God’s Servant">42 — The Prayer of God’s Servant</option>
+<option value="43 — A Prayer of Thanks">43 — A Prayer of Thanks</option>
+<option value="44 — A Prayer of the Lowly One">44 — A Prayer of the Lowly One</option>
+<option value="45 — The Meditation of My Heart">45 — The Meditation of My Heart</option>
+<option value="46 — We Thank You, Jehovah">46 — We Thank You, Jehovah</option>
+<option value="47 — Pray to Jehovah Each Day">47 — Pray to Jehovah Each Day</option>
+<option value="48 — Daily Walking With Jehovah">48 — Daily Walking With Jehovah</option>
+<option value="49 — Making Jehovah’s Heart Glad">49 — Making Jehovah’s Heart Glad</option>
+<option value="50 — My Prayer of Dedication">50 — My Prayer of Dedication</option>
+<option value="51 — To God We Are Dedicated!">51 — To God We Are Dedicated!</option>
+<option value="52 — Christian Dedication">52 — Christian Dedication</option>
+<option value="53 — Preparing to Preach">53 — Preparing to Preach</option>
+<option value="54 — “This Is the Way”">54 — “This Is the Way”</option>
+<option value="55 — Fear Them Not!">55 — Fear Them Not!</option>
+<option value="56 — Make the Truth Your Own">56 — Make the Truth Your Own</option>
+<option value="57 — Preaching to All Sorts of People">57 — Preaching to All Sorts of People</option>
+<option value="58 — Searching for Friends of Peace">58 — Searching for Friends of Peace</option>
+<option value="59 — Praise Jah With Me">59 — Praise Jah With Me</option>
+<option value="60 — It Means Their Life">60 — It Means Their Life</option>
+<option value="61 — Forward, You Witnesses!">61 — Forward, You Witnesses!</option>
+<option value="62 — The New Song">62 — The New Song</option>
+<option value="63 — We’re Jehovah’s Witnesses!">63 — We’re Jehovah’s Witnesses!</option>
+<option value="64 — Sharing Joyfully in the Harvest">64 — Sharing Joyfully in the Harvest</option>
+<option value="65 — Move Ahead!">65 — Move Ahead!</option>
+<option value="66 — Declare the Good News">66 — Declare the Good News</option>
+<option value="67 — “Preach the Word”">67 — “Preach the Word”</option>
+<option value="68 — Sowing Kingdom Seed">68 — Sowing Kingdom Seed</option>
+<option value="69 — Go Forward in Preaching the Kingdom!">69 — Go Forward in Preaching the Kingdom!</option>
+<option value="70 — Search Out Deserving Ones">70 — Search Out Deserving Ones</option>
+<option value="71 — We Are Jehovah’s Army!">71 — We Are Jehovah’s Army!</option>
+<option value="72 — Making Known the Kingdom Truth">72 — Making Known the Kingdom Truth</option>
+<option value="73 — Grant Us Boldness">73 — Grant Us Boldness</option>
+<option value="74 — Join in the Kingdom Song!">74 — Join in the Kingdom Song!</option>
+<option value="75 — “Here I Am! Send Me!”">75 — “Here I Am! Send Me!”</option>
+<option value="76 — How Does It Make You Feel?">76 — How Does It Make You Feel?</option>
+<option value="77 — Light in a Darkened World">77 — Light in a Darkened World</option>
+<option value="78 — “Teaching the Word of God”">78 — “Teaching the Word of God”</option>
+<option value="79 — Teach Them to Stand Firm">79 — Teach Them to Stand Firm</option>
+<option value="80 — “Taste and See That Jehovah Is Good”">80 — “Taste and See That Jehovah Is Good”</option>
+<option value="81 — The Life of a Pioneer">81 — The Life of a Pioneer</option>
+<option value="82 — “Let Your Light Shine”">82 — “Let Your Light Shine”</option>
+<option value="83 — “From House to House”">83 — “From House to House”</option>
+<option value="84 — Reaching Out">84 — Reaching Out</option>
+<option value="85 — Welcome One Another">85 — Welcome One Another</option>
+<option value="86 — We Must Be Taught">86 — We Must Be Taught</option>
+<option value="87 — Come! Be Refreshed">87 — Come! Be Refreshed</option>
+<option value="88 — Make Me Know Your Ways">88 — Make Me Know Your Ways</option>
+<option value="89 — Listen, Obey, and Be Blessed">89 — Listen, Obey, and Be Blessed</option>
+<option value="90 — Encourage One Another">90 — Encourage One Another</option>
+<option value="91 — Our Labor of Love">91 — Our Labor of Love</option>
+<option value="92 — A Place Bearing Your Name">92 — A Place Bearing Your Name</option>
+<option value="93 — Bless Our Meeting Together">93 — Bless Our Meeting Together</option>
+<option value="94 — Grateful for God’s Word">94 — Grateful for God’s Word</option>
+<option value="95 — The Light Gets Brighter">95 — The Light Gets Brighter</option>
+<option value="96 — God’s Own Book—A Treasure">96 — God’s Own Book—A Treasure</option>
+<option value="97 — Life Depends on God’s Word">97 — Life Depends on God’s Word</option>
+<option value="98 — The Scriptures—Inspired of God">98 — The Scriptures—Inspired of God</option>
+<option value="99 — Myriads of Brothers">99 — Myriads of Brothers</option>
+<option value="100 — Receive Them With Hospitality">100 — Receive Them With Hospitality</option>
+<option value="101 — Working Together in Unity">101 — Working Together in Unity</option>
+<option value="102 — “Assist Those Who Are Weak”">102 — “Assist Those Who Are Weak”</option>
+<option value="103 — Shepherds—Gifts in Men">103 — Shepherds—Gifts in Men</option>
+<option value="104 — God’s Gift of Holy Spirit">104 — God’s Gift of Holy Spirit</option>
+<option value="105 — “God Is Love”">105 — “God Is Love”</option>
+<option value="106 — Cultivating the Quality of Love">106 — Cultivating the Quality of Love</option>
+<option value="107 — The Divine Pattern of Love">107 — The Divine Pattern of Love</option>
+<option value="108 — God’s Loyal Love">108 — God’s Loyal Love</option>
+<option value="109 — Love Intensely From the Heart">109 — Love Intensely From the Heart</option>
+<option value="110 — “The Joy of Jehovah”">110 — “The Joy of Jehovah”</option>
+<option value="111 — Our Reasons for Joy">111 — Our Reasons for Joy</option>
+<option value="112 — Jehovah, God of Peace">112 — Jehovah, God of Peace</option>
+<option value="113 — Our Possession of Peace">113 — Our Possession of Peace</option>
+<option value="114 — “Exercise Patience”">114 — “Exercise Patience”</option>
+<option value="115 — Gratitude for Divine Patience">115 — Gratitude for Divine Patience</option>
+<option value="116 — The Power of Kindness">116 — The Power of Kindness</option>
+<option value="117 — The Quality of Goodness">117 — The Quality of Goodness</option>
+<option value="118 — “Give Us More Faith”">118 — “Give Us More Faith”</option>
+<option value="119 — We Must Have Faith">119 — We Must Have Faith</option>
+<option value="120 — Imitate Christ’s Mildness">120 — Imitate Christ’s Mildness</option>
+<option value="121 — We Need Self-Control">121 — We Need Self-Control</option>
+<option value="122 — Be Steadfast, Immovable!">122 — Be Steadfast, Immovable!</option>
+<option value="123 — Loyally Submitting to Theocratic Order">123 — Loyally Submitting to Theocratic Order</option>
+<option value="124 — Ever Loyal">124 — Ever Loyal</option>
+<option value="125 — “Happy Are the Merciful!”">125 — “Happy Are the Merciful!”</option>
+<option value="126 — Stay Awake, Stand Firm, Grow Mighty">126 — Stay Awake, Stand Firm, Grow Mighty</option>
+<option value="127 — The Sort of Person I Should Be">127 — The Sort of Person I Should Be</option>
+<option value="128 — Enduring to the End">128 — Enduring to the End</option>
+<option value="129 — We Will Keep Enduring">129 — We Will Keep Enduring</option>
+<option value="130 — Be Forgiving">130 — Be Forgiving</option>
+<option value="131 — “What God Has Yoked Together”">131 — “What God Has Yoked Together”</option>
+<option value="132 — Now We Are One">132 — Now We Are One</option>
+<option value="133 — Worship Jehovah During Youth">133 — Worship Jehovah During Youth</option>
+<option value="134 — Children Are a Trust From God">134 — Children Are a Trust From God</option>
+<option value="135 — Jehovah’s Warm Appeal: “Be Wise, My Son”">135 — Jehovah’s Warm Appeal: “Be Wise, My Son”</option>
+<option value="136 — “A Perfect Wage” From Jehovah">136 — “A Perfect Wage” From Jehovah</option>
+<option value="137 — Faithful Women, Christian Sisters">137 — Faithful Women, Christian Sisters</option>
+<option value="138 — Beauty in Gray-Headedness">138 — Beauty in Gray-Headedness</option>
+<option value="139 — See Yourself When All Is New">139 — See Yourself When All Is New</option>
+<option value="140 — Life Without End—At Last!">140 — Life Without End—At Last!</option>
+<option value="141 — The Miracle of Life">141 — The Miracle of Life</option>
+<option value="142 — Holding Fast to Our Hope">142 — Holding Fast to Our Hope</option>
+<option value="143 — Keep Working, Watching, and Waiting">143 — Keep Working, Watching, and Waiting</option>
+<option value="144 — Keep Your Eyes on the Prize!">144 — Keep Your Eyes on the Prize!</option>
+<option value="145 — God’s Promise of Paradise">145 — God’s Promise of Paradise</option>
+<option value="146 — “Making All Things New”">146 — “Making All Things New”</option>
+<option value="147 — Life Everlasting Is Promised">147 — Life Everlasting Is Promised</option>
+<option value="148 — Jehovah Provides Escape">148 — Jehovah Provides Escape</option>
+<option value="149 — A Victory Song">149 — A Victory Song</option>
+<option value="150 — Seek God for Your Deliverance">150 — Seek God for Your Deliverance</option>
+<option value="151 — He Will Call">151 — He Will Call</option>
+<option value="152 — A Place That Will Bring You Praise">152 — A Place That Will Bring You Praise</option>
+<option value="153 — Give Me Courage">153 — Give Me Courage</option>
+<option value="154 — Unfailing Love">154 — Unfailing Love</option>
+<option value="155 — Our Joy Eternally">155 — Our Joy Eternally</option>
+<option value="156 — With Eyes of Faith">156 — With Eyes of Faith</option>
+<option value="157 — Peace at Last!">157 — Peace at Last!</option>
+<option value="158 — “It Will Not Be Late!”">158 — “It Will Not Be Late!”</option>
+<option value="159 — Give Jehovah Glory">159 — Give Jehovah Glory</option>
+<option value="160 — “Good News”!">160 — “Good News”!</option>
+<option value="161 — To Do Your Will Is My Delight">161 — To Do Your Will Is My Delight</option>
+</datalist>
+<div class="wrapper">
+<div class="topbar">
+<div class="left">
+<button class="btn btn-secondary" id="btnExtractor" title="Open extractor">Extractor</button>
+</div>
+<div class="right">
+<button class="btn" id="btnLoad" title="Load saved names for this week">Load</button>
+<button class="btn btn-primary" id="btnSave" title="Save names for this week">Save</button>
+<button class="btn btn-danger" id="btnClear" title="Clear all inputs on this week">Clear</button>
+</div>
+</div>
+<!-- TOP HEADER (shared) -->
+<div class="card">
+<h2>Chatsworth Sign Language<br/>
+<span class="week-text"></span>
+<label class="week-picker native-like"><span aria-hidden="true" class="icon">📅</span><select aria-label="Select week" id="weekNative"></select></label>
+</h2>
+</div>
+<!-- ===== WEEK OF Oct 27–Nov 2, 2025 (FILLED) ===== -->
+<div class="schedule" id="week-2025-10-27" style="display:block">
+<div class="page-grid">
+<div class="page-col">
+<div class="card">
+<div class="accent"></div>
+<h2>Life &amp; Ministry Meeting</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Chairman</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="155"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Middle Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="111"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="8"/></div>
+</div>
+</div>
+</div>
+<div class="card treasures">
+<div class="accent" style="background-color:#3C7F8B"></div>
+<h2 style="color:#2A6B77">Treasures From God’s Word</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered, before 1 -->
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">1. Enjoy a Happy, Healthy Life</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">2. Spiritual Gems</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">3. Bible Reading</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card ayf">
+<div class="accent" style="background-color:#D68F00"></div>
+<h2 style="color:#9B6D17">Apply Yourself to the Field Ministry</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">4. Following Up</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">5. Following Up</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">6. Talk</div><div class="item-time">(5 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card living">
+<div class="accent" style="background-color:#BF2F13"></div>
+<h2 style="color:#942926">Living as Christians</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">7. Local Needs</div><div class="item-time">(15 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">8. Congregation Bible Study</div><div class="item-time">(30 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Concluding Comments</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered at very end -->
+</div>
+</div>
+<div class="title" style="display:none">Oct 27–Nov 2, 2025</div>
+</div>
+<div class="page-col">
+<div class="card media-checklist">
+<div class="accent" style="background-color:#374151"></div>
+<h2 style="color:#111827">Media Checklist</h2>
+<div class="content">
+<iframe loading="lazy" src="Simple_Playlist_Extractor_CHECKLIST_PERSIST_RESET_COMPACT.html" title="Extractor"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    var sel = document.getElementById('weekNative');
+    if (!sel) return;
+    // Force-populate the native select with our single week
+    var id = 'week-2025-10-27';
+    var label = 'Oct 27–Nov 2, 2025';
+    sel.innerHTML = '';
+    var opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = label;
+    sel.appendChild(opt);
+    sel.value = id;
+
+    // Show only this schedule
+    document.querySelectorAll('.schedule').forEach(function(s){ s.style.display = 'none'; });
+    var el = document.getElementById(id); if (el) el.style.display = 'block';
+
+    // Update header text
+    var header = document.querySelector('.week-text'); if (header) header.textContent = label;
+  } catch(e){ /* no-op */ }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var sel = document.getElementById('weekNative');
+  if (sel) {
+    // Ensure it's visible
+    sel.style.display = '';
+    var label = sel.closest('.week-picker');
+    if (label) label.style.display = '';
+
+    // If only one option, still show the dropdown (no hiding)
+    if (sel.options.length === 1) {
+      // No special action needed; we simply don't hide it.
+    }
+  }
+
+  // Extra safety: If multiple schedules exist, keep only the first matching id
+  var seen = new Set();
+  document.querySelectorAll('.schedule[id^="week-"]').forEach(function(s){
+    if (seen.has(s.id)) { s.remove(); }
+    else { seen.add(s.id); }
+  });
+});
+</script>
+<script>
+/* Songs auto-fill */
+(function(){
+  function setSong(labelText, num){
+    try {
+      num = parseInt(num, 10);
+      if (!(num >= 1 && num <= 161)) return false;
+      var items = Array.from(document.querySelectorAll('.item.item-grid'));
+      for (var i=0;i<items.length;i++){
+        var lab = items[i].querySelector('.item-label');
+        var inp = items[i].querySelector('input.song-input');
+        if (!lab || !inp) continue;
+        if (lab.textContent.trim().toLowerCase() === labelText.toLowerCase()){
+          inp.value = String(num);
+          return true;
+        }
+      }
+    } catch(e){}
+    return false;
+  }
+  function parseAndFillSongs(text){
+    if (!text) return false;
+    var open = /Opening\s*Song\s*[:\-]?\s*(\d{1,3})/i.exec(text) || /Opening\s*[:\-]?\s*(\d{1,3})/i.exec(text);
+    var mid  = /Middle\s*Song\s*[:\-]?\s*(\d{1,3})/i.exec(text)  || /Middle\s*[:\-]?\s*(\d{1,3})/i.exec(text);
+    var close= /Closing\s*Song\s*[:\-]?\s*(\d{1,3})/i.exec(text)  || /Closing\s*[:\-]?\s*(\d{1,3})/i.exec(text);
+    var any=false;
+    if (open && setSong('Opening Song', open[1])) any=true;
+    if (mid && setSong('Middle Song', mid[1])) any=true;
+    if (close && setSong('Closing Song', close[1])) any=true;
+    return any;
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('paste', function(ev){
+      try {
+        var text = (ev.clipboardData || window.clipboardData).getData('text');
+        if (parseAndFillSongs(text)) {
+          var hdr = document.querySelector('.week-text') || document.querySelector('h2#topHeader');
+          if (hdr){
+            var note = document.createElement('span');
+            note.textContent = ' • Songs auto-filled';
+            note.style.fontSize = '12px'; note.style.color = '#6b7280';
+            hdr.appendChild(note);
+            setTimeout(function(){ if(note && note.parentNode){ note.parentNode.removeChild(note); } }, 2200);
+          }
+        }
+      } catch(e){}
+    }, true);
+  });
+})();
+</script>
+<script>
+
+
+
+
+
+
+<script>
+(function(){
+  function findFullLabel(num){
+    var dl = document.getElementById('songs161');
+    if (!dl) return null;
+    num = String(num);
+    // Look for option whose value starts with "num — "
+    var opt = Array.from(dl.querySelectorAll('option')).find(function(o){
+      return o.value && o.value.indexOf(num + ' — ') === 0;
+    });
+    return opt ? opt.value : null;
+  }
+
+  // Patch existing paste autofill (if present) or add a lightweight setter
+  function setSongFull(labelText, num){
+    try {
+      var full = findFullLabel(num);
+      var items = Array.from(document.querySelectorAll('.item.item-grid'));
+      for (var i=0;i<items.length;i++){
+        var lab = items[i].querySelector('.item-label');
+        var inp = items[i].querySelector('input.song-input');
+        if (!lab || !inp) continue;
+        if (lab.textContent.trim().toLowerCase() === labelText.toLowerCase()){
+          inp.value = full || String(num);
+          return true;
+        }
+      }
+    } catch(e){}
+    return false;
+  }
+
+  // If an older setSong exists, wrap it
+  if (typeof window.setSong === 'function'){
+    var _oldSetSong = window.setSong;
+    window.setSong = function(labelText, num){
+      if (!setSongFull(labelText, num)){
+        return _oldSetSong(labelText, num);
+      }
+      return true;
+    };
+  }
+
+  // Expand plain numeric entries on blur
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('input.song-input').forEach(function(inp){
+      inp.addEventListener('blur', function(){
+        var m = String(inp.value||'').match(/^\s*(\d{1,3})\s*$/);
+        if (!m) return;
+        var full = findFullLabel(m[1]);
+        if (full) inp.value = full;
+      });
+    });
+  });
+})();
+</script>
+<!-- ===== WEEK OF Oct 20–26, 2025 ===== -->
+<div class="schedule" id="week-2025-10-20" style="display:none">
+<div class="page-grid">
+<div class="page-col">
+<div class="card">
+<div class="accent"></div>
+<h2>Life &amp; Ministry Meeting</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Chairman</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="30 — My Father, My God and Friend"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Middle Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="47 — Pray to Jehovah Each Day"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="28 — Gaining Jehovah’s Friendship"/></div>
+</div>
+</div>
+</div>
+<div class="card treasures">
+<div class="accent" style="background-color:#3C7F8B"></div>
+<h2 style="color:#2A6B77">Treasures From God’s Word</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered, before 1 -->
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">1. Keep a Proper View of Your Trials</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">2. Spiritual Gems</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">3. Bible Reading</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card ayf">
+<div class="accent" style="background-color:#D68F00"></div>
+<h2 style="color:#9B6D17">Apply Yourself to the Field Ministry</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">4. Starting a Conversation</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">5. Starting a Conversation</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">6. Making Disciples</div><div class="item-time">(5 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card living">
+<div class="accent" style="background-color:#BF2F13"></div>
+<h2 style="color:#942926">Living as Christians</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">7. Finding Stability in the Face of Tragedy</div><div class="item-time">(15 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">8. Congregation Bible Study</div><div class="item-time">(30 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Concluding Comments</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered at very end -->
+</div>
+</div>
+<div class="title" style="display:none">Oct 20–26, 2025</div>
+</div>
+<div class="page-col">
+<div class="card media-checklist">
+<div class="accent" style="background-color:#374151"></div>
+<h2 style="color:#111827">Media Checklist</h2>
+<div class="content">
+<iframe loading="lazy" src="Simple_Playlist_Extractor_CHECKLIST_PERSIST_RESET_COMPACT.html" title="Extractor"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    var sel = document.getElementById('weekNative');
+    if (!sel) return;
+    sel.innerHTML = '';
+    var schedules = Array.from(document.querySelectorAll('.schedule[id^="week-"]'));
+    schedules.forEach(function(sec){
+      var titleEl = sec.querySelector('.title');
+      var label = titleEl ? (titleEl.textContent || '').trim() : sec.id;
+      var opt = document.createElement('option');
+      opt.value = sec.id;
+      opt.textContent = label;
+      sel.appendChild(opt);
+    });
+    // default to last (newest) week
+    if (schedules.length){
+      sel.value = schedules[schedules.length-1].id;
+      // show that schedule
+      schedules.forEach(function(s){ s.style.display = 'none'; });
+      var show = document.getElementById(sel.value);
+      if (show) show.style.display = 'block';
+      var header = document.querySelector('.week-text');
+      if (header) header.textContent = sel.options[sel.selectedIndex].textContent;
+    }
+    sel.addEventListener('change', function(){
+      schedules.forEach(function(s){ s.style.display = 'none'; });
+      var el = document.getElementById(sel.value);
+      if (el) el.style.display = 'block';
+      var header = document.querySelector('.week-text');
+      if (header) header.textContent = sel.options[sel.selectedIndex].textContent;
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  function parseDateFromId(id){
+    // id is like "week-2025-10-20"
+    var m = id.match(/week-(\d{4})-(\d{2})-(\d{2})/);
+    if (!m) return null;
+    return new Date(parseInt(m[1]), parseInt(m[2])-1, parseInt(m[3]));
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    var sel = document.getElementById('weekNative');
+    if (!sel) return;
+    sel.innerHTML = '';
+    var schedules = Array.from(document.querySelectorAll('.schedule[id^="week-"]'));
+    // Sort schedules by date (id format week-YYYY-MM-DD)
+    schedules.sort(function(a,b){
+      var da = parseDateFromId(a.id), db = parseDateFromId(b.id);
+      return da - db;
+    });
+    schedules.forEach(function(sec){
+      var titleEl = sec.querySelector('.title');
+      var label = titleEl ? (titleEl.textContent || '').trim() : sec.id;
+      var opt = document.createElement('option');
+      opt.value = sec.id;
+      opt.textContent = label;
+      sel.appendChild(opt);
+    });
+    // Default select the last (latest) week
+    if (schedules.length){
+      sel.value = schedules[schedules.length-1].id;
+      // Show only the selected schedule
+      schedules.forEach(function(s){ s.style.display = 'none'; });
+      var show = document.getElementById(sel.value);
+      if (show) show.style.display = 'block';
+      var header = document.querySelector('.week-text');
+      if (header) header.textContent = sel.options[sel.selectedIndex].textContent;
+    }
+    sel.addEventListener('change', function(){
+      schedules.forEach(function(s){ s.style.display = 'none'; });
+      var el = document.getElementById(sel.value);
+      if (el) el.style.display = 'block';
+      var header = document.querySelector('.week-text');
+      if (header) header.textContent = sel.options[sel.selectedIndex].textContent;
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  function parseDateFromId(id){
+    // expects id like "week-YYYY-MM-DD"
+    var m = id.match(/week-(\d{4})-(\d{2})-(\d{2})/);
+    if (!m) return null;
+    return new Date(parseInt(m[1],10), parseInt(m[2],10)-1, parseInt(m[3],10));
+  }
+
+  function monthIndex(shortOrLong){
+    var map = {
+      jan:0,feb:1,mar:2,apr:3,may:4,jun:5,
+      jul:6,aug:7,sep:8,sept:8,oct:9,nov:10,dec:11
+    };
+    var k = String(shortOrLong||'').trim().toLowerCase();
+    return (k in map) ? map[k] : null;
+  }
+
+  // Parse hidden title like "Oct 20–26, 2025" or "Oct 27–Nov 2, 2025"
+  function parseTitleRange(txt){
+    // Normalize EN dash/hyphen
+    var s = String(txt||'').replace(/\u2013|\u2014/g, '-').trim();
+    // Match e.g., "Oct 20-26, 2025" or "Oct 27-Nov 2, 2025"
+    var m = s.match(/^([A-Za-z]+)\s+(\d{1,2})\s*-\s*([A-Za-z]+)?\s*(\d{1,2}),\s*(\d{4})$/);
+    if (!m) return null;
+    var m1 = monthIndex(m[1]);
+    var d1 = parseInt(m[2],10);
+    var m2 = (m[3] ? monthIndex(m[3]) : m1);
+    var d2 = parseInt(m[4],10);
+    var y  = parseInt(m[5],10);
+    if (m1==null || m2==null) return null;
+    var start = new Date(y, m1, d1, 0,0,0,0);
+    var end   = new Date(y, m2, d2, 23,59,59,999);
+    return {start:start, end:end};
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var sel = document.getElementById('weekNative');
+    if (!sel) return;
+    sel.innerHTML = '';
+    var schedules = Array.from(document.querySelectorAll('.schedule[id^="week-"]'));
+
+    // Sort schedules earliest -> latest by id date
+    schedules.sort(function(a,b){
+      var da = parseDateFromId(a.id), db = parseDateFromId(b.id);
+      return (da - db);
+    });
+
+    // Build options from hidden .title
+    schedules.forEach(function(sec){
+      var titleEl = sec.querySelector('.title');
+      var label = titleEl ? (titleEl.textContent || '').trim() : sec.id;
+      var opt = document.createElement('option');
+      opt.value = sec.id;
+      opt.textContent = label;
+      sel.appendChild(opt);
+    });
+
+    // Determine default selection:
+    // - if "today" within any week's title range, select that week
+    // - else select the earliest (first) week
+    var now = new Date();
+    var chosenId = null;
+    // Try match by parsing the title range
+    for (var i=0;i<schedules.length;i++){
+      var sec = schedules[i];
+      var titleEl = sec.querySelector('.title');
+      var label = titleEl ? (titleEl.textContent||'').trim() : '';
+      var rng = parseTitleRange(label);
+      if (rng && now >= rng.start && now <= rng.end) {
+        chosenId = sec.id;
+        break;
+      }
+    }
+    if (!chosenId && schedules.length){
+      chosenId = schedules[0].id; // earliest
+    }
+
+    // Show only the chosen schedule
+    schedules.forEach(function(s){ s.style.display = 'none'; });
+    if (chosenId){
+      sel.value = chosenId;
+      var show = document.getElementById(chosenId);
+      if (show) show.style.display = 'block';
+      var header = document.querySelector('.week-text');
+      var opt = Array.from(sel.options).find(function(o){ return o.value === chosenId; });
+      if (header && opt) header.textContent = opt.textContent;
+    }
+
+    // Change handler
+    sel.addEventListener('change', function(){
+      schedules.forEach(function(s){ s.style.display = 'none'; });
+      var el = document.getElementById(sel.value);
+      if (el) el.style.display = 'block';
+      var header = document.querySelector('.week-text');
+      if (header) header.textContent = sel.options[sel.selectedIndex].textContent;
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  function $(sel){ return document.querySelector(sel); }
+  function show(el){ if (!el) return; el.classList.remove('hidden'); el.removeAttribute('aria-hidden'); el.style.display=''; }
+  function hide(el){ if (!el) return; el.classList.add('hidden'); el.setAttribute('aria-hidden','true'); el.style.display='none'; }
+
+  function openExtractor(e){
+    var wrapper = $('.wrapper') || $('#main') || $('main');
+    var view = $('#extractorView');
+    if (!view) return;
+    if (e) e.preventDefault();
+    hide(wrapper);
+    show(view);
+    // sync header if present
+    var header = $('.week-text');
+    var exHdr = view.querySelector('[data-extractor-header]');
+    if (header && exHdr) exHdr.textContent = header.textContent;
+  }
+
+  function closeExtractor(e){
+    var wrapper = $('.wrapper') || $('#main') || $('main');
+    var view = $('#extractorView');
+    if (!view) return;
+    if (e) e.preventDefault();
+    show(wrapper);
+    hide(view);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // Direct bindings if IDs exist
+    var btn = $('#btnExtractor');
+    var back = $('#btnBackFromExtractor');
+    if (btn) btn.addEventListener('click', openExtractor);
+    if (back) back.addEventListener('click', closeExtractor);
+
+    // Event delegation fallbacks
+    document.addEventListener('click', function(ev){
+      var openEl = ev.target.closest('#btnExtractor, [data-extractor], button[aria-label="Extractor"], a[aria-label="Extractor"]');
+      if (openEl) return openExtractor(ev);
+      var closeEl = ev.target.closest('#btnBackFromExtractor, [data-extractor-back], button[aria-label="Back"], a[aria-label="Back"]');
+      if (closeEl) return closeExtractor(ev);
+    }, true);
+
+    // Support deep-link: ?view=extractor
+    try {
+      var u = new URL(window.location.href);
+      if (u.searchParams.get('view') === 'extractor') { openExtractor(); }
+    } catch(e){}
+  });
+})();
+</script>
+<script>
+(function(){
+  // Basic parser: if file is JSON, show it; if text, show text; otherwise show size info.
+  function readAsText(file){
+    return new Promise(function(resolve, reject){
+      var fr = new FileReader();
+      fr.onload = function(){ resolve(String(fr.result || '')); };
+      fr.onerror = reject;
+      fr.readAsText(file);
+    });
+  }
+  async function handleParse(){
+    var out = document.getElementById('extractorResult');
+    var pick = document.getElementById('filePick');
+    if (!pick || !pick.files || !pick.files[0]){
+      out.textContent = 'Please choose a .jwlplaylist / .jwlibrary / .json file.';
+      return;
+    }
+    var f = pick.files[0];
+    try {
+      var txt = await readAsText(f);
+      // Try JSON first
+      try{
+        var obj = JSON.parse(txt);
+        out.textContent = JSON.stringify(obj, null, 2);
+      } catch(e){
+        // Not JSON: just dump text; limit size
+        out.textContent = (txt.length > 200000) ? txt.slice(0, 200000) + '\n...[truncated]...' : txt;
+      }
+    } catch(err){
+      out.textContent = 'Error reading file: ' + (err && err.message ? err.message : String(err));
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    var btn = document.getElementById('btnParse');
+    if (btn) btn.addEventListener('click', handleParse);
+  });
+})();
+</script>
+<script>
+(function(){
+  function $(sel){ return document.querySelector(sel); }
+  function show(el){ if (!el) return; el.classList.remove('hidden'); el.removeAttribute('aria-hidden'); el.style.display='block'; }
+  function hide(el){ if (!el) return; el.classList.add('hidden'); el.setAttribute('aria-hidden','true'); el.style.display='none'; }
+
+  function isExtractorTrigger(el){
+    if (!el) return false;
+    if (el.id === 'btnExtractor') return true;
+    if (el.matches && el.matches('[data-extractor], button[aria-label="Extractor"], a[aria-label="Extractor"]')) return true;
+    // text fallback
+    var txt = (el.textContent || '').trim().toLowerCase();
+    return txt === 'extractor';
+  }
+
+  function sanitizeLink(el){
+    if (!el) return;
+    if (el.tagName === 'A'){
+      el.removeAttribute('target');
+      el.setAttribute('href', 'javascript:void(0)');
+    }
+  }
+
+  function openExtractor(e){
+    if (e && e.preventDefault) e.preventDefault();
+    var wrapper = $('.wrapper') || $('#main') || $('main');
+    var view = $('#extractorView');
+    if (!view){
+      // safety: create view if missing
+      var sec = document.createElement('section');
+      sec.id = 'extractorView';
+      sec.innerHTML = '<div style="padding:16px">Extractor view missing; created.</div>';
+      document.body.appendChild(sec);
+      view = sec;
+    }
+    hide(wrapper);
+    show(view);
+    // Ensure the content region exists
+    var res = document.getElementById('extractorResult');
+    if (!res){
+      var inner = document.createElement('div');
+      inner.id = 'extractorResult';
+      inner.textContent = 'Extractor initialized. Choose a file to parse.';
+      view.appendChild(inner);
+    }
+  }
+
+  function closeExtractor(e){
+    if (e && e.preventDefault) e.preventDefault();
+    var wrapper = $('.wrapper') || $('#main') || $('main');
+    var view = $('#extractorView');
+    show(wrapper);
+    hide(view);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // Sanitize any obvious extractor anchors
+    document.querySelectorAll('#btnExtractor, [data-extractor], a[aria-label="Extractor"], a:contains("Extractor")').forEach(sanitizeLink);
+
+    // Bind direct buttons
+    var btn = $('#btnExtractor');
+    if (btn){
+      sanitizeLink(btn);
+      btn.addEventListener('click', openExtractor);
+    }
+    var back = $('#btnBackFromExtractor');
+    if (back) back.addEventListener('click', closeExtractor);
+
+    // Delegation: capture phase to beat default navigation
+    document.addEventListener('click', function(ev){
+      var t = ev.target.closest ? ev.target.closest('#btnExtractor, [data-extractor], button[aria-label="Extractor"], a[aria-label="Extractor"]') : null;
+      if (t){
+        ev.preventDefault();
+        openExtractor(ev);
+        return false;
+      }
+      var b = ev.target.closest ? ev.target.closest('#btnBackFromExtractor, [data-extractor-back], button[aria-label="Back"], a[aria-label="Back"]') : null;
+      if (b){
+        ev.preventDefault();
+        closeExtractor(ev);
+        return false;
+      }
+    }, true);
+  });
+})();
+</script>
+<script>
+(function(){
+  function $(sel){ return document.querySelector(sel); }
+  function show(el){ if (el){ el.classList.remove('hidden'); el.removeAttribute('aria-hidden'); el.style.display='block'; } }
+  function hide(el){ if (el){ el.classList.add('hidden'); el.setAttribute('aria-hidden','true'); el.style.display='none'; } }
+
+  function readAsText(file){
+    return new Promise(function(resolve,reject){
+      var fr = new FileReader();
+      fr.onload = function(){ resolve(String(fr.result||'')); };
+      fr.onerror = reject;
+      fr.readAsText(file);
+    });
+  }
+
+  async function parsePicked(){
+    var out = $('#extractorResult');
+    var pick = $('#filePick');
+    if (!out) return;
+    if (!pick || !pick.files || !pick.files[0]){
+      out.textContent = 'Please choose a .jwlplaylist / .jwlibrary / .json / .txt file.';
+      return;
+    }
+    var f = pick.files[0];
+    try{
+      var txt = await readAsText(f);
+      try {
+        var obj = JSON.parse(txt);
+        out.textContent = JSON.stringify(obj, null, 2);
+      } catch(e){
+        out.textContent = (txt.length > 300000) ? (txt.slice(0,300000) + '\n...[truncated]...') : txt;
+      }
+    } catch(err){
+      out.textContent = 'Error reading file: ' + (err && err.message ? err.message : String(err));
+    }
+  }
+
+  function openExtractor(ev){
+    if (ev) ev.preventDefault();
+    var wrap = $('.wrapper') || $('main') || $('#main');
+    var view = $('#extractorView');
+    hide(wrap); show(view);
+    var header = $('.week-text'), exHdr = view && view.querySelector('[data-extractor-header]');
+    if (header && exHdr){ exHdr.textContent = 'Extractor — ' + header.textContent; }
+  }
+  function closeExtractor(ev){
+    if (ev) ev.preventDefault();
+    var wrap = $('.wrapper') || $('main') || $('#main');
+    var view = $('#extractorView');
+    show(wrap); hide(view);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var btn = $('#btnExtractor'); if (btn) btn.addEventListener('click', openExtractor);
+    var back= $('#btnBackFromExtractor'); if (back) back.addEventListener('click', closeExtractor);
+    var parse= $('#btnParse'); if (parse) parse.addEventListener('click', parsePicked);
+
+    // Global delegation (safety)
+    document.addEventListener('click', function(ev){
+      var t = ev.target.closest ? ev.target.closest('#btnExtractor,[data-extractor]') : null;
+      if (t){ ev.preventDefault(); openExtractor(ev); return; }
+      var b = ev.target.closest ? ev.target.closest('#btnBackFromExtractor,[data-extractor-back]') : null;
+      if (b){ ev.preventDefault(); closeExtractor(ev); return; }
+    }, true);
+  });
+})();
+</script>
+<script>
+(function(){
+  function $(sel){ return document.querySelector(sel); }
+  function text(str){ return document.createTextNode(String(str)); }
+  function safeJSON(str){ try{ return JSON.parse(str); }catch(e){ return null; } }
+  function nowStamp(){
+    const d = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + '_' + pad(d.getHours()) + pad(d.getMinutes());
+  }
+  function downloadText(filename, content){
+    const blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{
+      URL.revokeObjectURL(a.href);
+      a.remove();
+    }, 0);
+  }
+  function readAsText(file){
+    return new Promise(function(resolve, reject){
+      const fr = new FileReader();
+      fr.onload = () => resolve(String(fr.result || ''));
+      fr.onerror = reject;
+      fr.readAsText(file);
+    });
+  }
+  async function parsePicked(){
+    const out = $('#extractorResult');
+    const pick = $('#filePick');
+    if (!out) return;
+    if (!pick || !pick.files || !pick.files[0]){
+      out.textContent = 'Please choose a .jwlplaylist / .jwlibrary / .json / .txt file.';
+      return;
+    }
+    const f = pick.files[0];
+    try{
+      const txt = await readAsText(f);
+      const obj = safeJSON(txt);
+      if (obj){
+        out.textContent = JSON.stringify(obj, null, 2);
+      } else {
+        out.textContent = (txt.length > 300000) ? (txt.slice(0,300000) + '\n...[truncated]...') : txt;
+      }
+    }catch(err){
+      out.textContent = 'Error reading file: ' + (err && err.message ? err.message : String(err));
+    }
+  }
+  function loadFile(){
+    const pick = $('#filePick');
+    if (pick) pick.click();
+  }
+  function clearAll(){
+    const pick = $('#filePick');
+    const out = $('#extractorResult');
+    if (pick) pick.value = '';
+    if (out) out.textContent = 'No file loaded.';
+  }
+  function saveOutput(){
+    const out = $('#extractorResult');
+    if (!out) return;
+    const txt = out.textContent || '';
+    const tryJSON = safeJSON(txt);
+    const fname = 'extractor_' + nowStamp() + (tryJSON ? '.json' : '.txt');
+    downloadText(fname, txt);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    const btnLoad  = $('#btnLoad');
+    const btnParse = $('#btnParse');
+    const btnClear = $('#btnClear');
+    const btnSave  = $('#btnSave');
+    if (btnLoad)  btnLoad.addEventListener('click', loadFile);
+    if (btnParse) btnParse.addEventListener('click', parsePicked);
+    if (btnClear) btnClear.addEventListener('click', clearAll);
+    if (btnSave)  btnSave.addEventListener('click', saveOutput);
+
+    // Delegation fallbacks
+    document.addEventListener('click', function(ev){
+      const t = ev.target.closest && ev.target.closest('[data-action]');
+      if (!t) return;
+      const action = t.getAttribute('data-action');
+      if (action === 'load'){ ev.preventDefault(); loadFile(); }
+      if (action === 'parse'){ ev.preventDefault(); parsePicked(); }
+      if (action === 'clear'){ ev.preventDefault(); clearAll(); }
+      if (action === 'save'){ ev.preventDefault(); saveOutput(); }
+    }, true);
+
+    // Drag & drop support
+    const dropZone = $('#extractorResult');
+    if (dropZone){
+      dropZone.addEventListener('dragover', function(e){ e.preventDefault(); dropZone.style.outline='2px dashed #60a5fa'; });
+      dropZone.addEventListener('dragleave', function(){ dropZone.style.outline=''; });
+      dropZone.addEventListener('drop', async function(e){
+        e.preventDefault(); dropZone.style.outline='';
+        const files = e.dataTransfer && e.dataTransfer.files;
+        if (!files || !files[0]) return;
+        const txt = await readAsText(files[0]);
+        const obj = safeJSON(txt);
+        dropZone.textContent = obj ? JSON.stringify(obj, null, 2) : txt;
+      });
+    }
+  });
+})();
+</script>
+<input accept=".json,.txt" id="filePickMain" style="display:none" type="file"/>
+<script>
+(function(){
+  function $(sel){ return document.querySelector(sel); }
+  function scheduleContainer(){ 
+    // visible schedule (wrapper shown, extractor hidden)
+    var wrap = document.querySelector('.wrapper') || document.querySelector('main') || document.getElementById('main') || document.body;
+    return wrap;
+  }
+  function currentScheduleRoot(){
+    // visible .schedule (the one displayed)
+    var all = Array.from(document.querySelectorAll('.schedule[id^="week-"]'));
+    if (!all.length) return scheduleContainer();
+    for (var i=0;i<all.length;i++){
+      var s = all[i];
+      var disp = window.getComputedStyle(s).display;
+      if (disp !== 'none') return s;
+    }
+    return all[all.length-1];
+  }
+  function collectForm(){
+    var root = currentScheduleRoot();
+    var inputs = Array.from(root.querySelectorAll('input, textarea, select'));
+    var out = [];
+    inputs.forEach(function(inp, idx){
+      var ro = inp.readOnly || inp.getAttribute('readonly') !== null;
+      var cls = inp.className || '';
+      var type = (inp.getAttribute('type')||'').toLowerCase();
+      var val = inp.value;
+      var label = '';
+      var row = inp.closest && inp.closest('.item.item-grid');
+      if (row){
+        var labEl = row.querySelector('.item-label');
+        if (labEl) label = labEl.textContent.trim();
+      }
+      out.push({i: idx, type: type, cls: cls, ro: !!ro, label: label, value: val});
+    });
+    return {version:1, when: new Date().toISOString(), scheduleId: (currentScheduleRoot().id||''), fields: out};
+  }
+  function applyForm(data){
+    try{
+      if (!data || !data.fields) return false;
+      var root = currentScheduleRoot();
+      var inputs = Array.from(root.querySelectorAll('input, textarea, select'));
+      // map by label first, then by index fallback
+      data.fields.forEach(function(f, idx){
+        // skip songs? We restore them as well, since value uses "n — title"
+        var target = null;
+        if (f.label){
+          // find first input in a row whose .item-label matches
+          var row = Array.from(root.querySelectorAll('.item.item-grid')).find(function(r){
+            var lb = r.querySelector('.item-label');
+            return lb && lb.textContent.trim() === f.label;
+          });
+          if (row){
+            target = row.querySelector('input, textarea, select');
+          }
+        }
+        if (!target && inputs[f.i]) target = inputs[f.i];
+        if (!target) return;
+        if (target.readOnly || target.getAttribute('readonly') !== null) return;
+        target.value = f.value;
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  function safeJSON(s){ try{ return JSON.parse(s); }catch(e){ return null; } }
+  function downloadText(filename, content){
+    var blob = new Blob([content], {type: 'application/json;charset=utf-8'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 0);
+  }
+  function nowStamp(){
+    var d = new Date(), p = n=>String(n).padStart(2,'0');
+    return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'_'+p(d.getHours())+p(d.getMinutes());
+  }
+
+  async function readAsText(file){
+    return new Promise(function(resolve,reject){
+      var fr = new FileReader();
+      fr.onload = function(){ resolve(String(fr.result||'')); };
+      fr.onerror = reject;
+      fr.readAsText(file);
+    });
+  }
+
+  // Main page actions
+  function mainLoad(){ var fp = $('#filePickMain'); if (fp) fp.click(); }
+  async function onMainFilePicked(ev){
+    var f = ev.target.files && ev.target.files[0];
+    if (!f) return;
+    var txt = await readAsText(f);
+    var obj = safeJSON(txt);
+    if (obj && obj.fields){ applyForm(obj); }
+    else { alert('Selected file is not a valid Tuesday schedule JSON.'); }
+    ev.target.value = '';
+  }
+  
+  function mainSave(){
+    var root = (function(){
+      var all = Array.from(document.querySelectorAll('.schedule[id^="week-"]'));
+      for (var i=0;i<all.length;i++){
+        if (window.getComputedStyle(all[i]).display !== 'none') return all[i];
+      }
+      return all.length ? all[all.length-1] : document.body;
+    })();
+    var schedId = (root && root.id || '').replace(/^week-/, '');
+    // filename: tuesday-yyyy-mm-dd.json (fall back to today if unknown)
+    var fname = 'tuesday-' + (schedId || (new Date().toISOString().slice(0,10))) + '.json';
+    var snapshot = (function collectForm(){
+      var inputs = Array.from(root.querySelectorAll('input, textarea, select'));
+      var out = [];
+      inputs.forEach(function(inp, idx){
+        var ro = inp.readOnly || inp.getAttribute('readonly') !== null;
+        var cls = inp.className || '';
+        var type = (inp.getAttribute('type')||'').toLowerCase();
+        var val = inp.value;
+        var label = '';
+        var row = inp.closest && inp.closest('.item.item-grid');
+        if (row){
+          var labEl = row.querySelector('.item-label');
+          if (labEl) label = labEl.textContent.trim();
+        }
+        out.push({i: idx, type: type, cls: cls, ro: !!ro, label: label, value: val});
+      });
+      return {version:1, when: new Date().toISOString(), scheduleId: (root.id||''), fields: out};
+    })();
+    var blob = new Blob([JSON.stringify(snapshot, null, 2)], {type: 'application/json;charset=utf-8'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = fname;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 0);
+  }
+
+  function mainClear(){
+    var root = currentScheduleRoot();
+    Array.from(root.querySelectorAll('input, textarea')).forEach(function(inp){
+      if (inp.classList && inp.classList.contains('song-input')) return; // keep songs
+      if (inp.readOnly || inp.getAttribute('readonly') !== null) return; // keep read-only
+      inp.value = '';
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var fp = $('#filePickMain'); if (fp) fp.addEventListener('change', onMainFilePicked);
+
+    function bind(sel, fn){
+      var el = $(sel); if (el) el.addEventListener('click', function(ev){ ev.preventDefault(); fn(); });
+    }
+    // Bind to common IDs for main buttons (either *Main or generic if they live on main page)
+    bind('#btnLoadMain', mainLoad);
+    bind('#btnSaveMain', mainSave);
+    bind('#btnClearMain', mainClear);
+
+    // Fallback: if generic IDs exist on main page (not extractor visible), use them for main too
+    var extractorVisible = document.getElementById('extractorView') && window.getComputedStyle(document.getElementById('extractorView')).display !== 'none';
+    if (!extractorVisible){
+      bind('#btnLoad', mainLoad);
+      bind('#btnSave', mainSave);
+      bind('#btnClear', mainClear);
+    }
+
+    // Delegation backup for data-action attrs on main page
+    document.addEventListener('click', function(ev){
+      var t = ev.target.closest && ev.target.closest('[data-action]');
+      if (!t) return;
+      var action = t.getAttribute('data-action');
+      // Ensure user is on main page
+      var view = document.getElementById('extractorView');
+      var onMain = !(view && window.getComputedStyle(view).display !== 'none');
+      if (!onMain) return;
+      if (action === 'load'){ ev.preventDefault(); mainLoad(); }
+      if (action === 'save'){ ev.preventDefault(); mainSave(); }
+      if (action === 'clear'){ ev.preventDefault(); mainClear(); }
+    }, true);
+  });
+})();
+</script>
+<script>
+(function(){
+  function normalizeSongs(){
+    var dl = document.getElementById('songs161');
+    if (!dl) return;
+    var opts = Array.from(dl.querySelectorAll('option'));
+    function fullFor(num){
+      num = String(num||'').trim();
+      var pref = num + ' — ';
+      var o = opts.find(function(op){ return (op.value||'').indexOf(pref) === 0; });
+      return o ? o.value : null;
+    }
+    document.querySelectorAll('input.song-input').forEach(function(inp){
+      var v = String(inp.value||'').trim();
+      var m = v.match(/^\d{1,3}$/);
+      if (m){
+        var full = fullFor(v);
+        if (full) inp.value = full;
+      }
+    });
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', normalizeSongs);
+  } else {
+    normalizeSongs();
+  }
+})();
+</script>
+<!-- ===== WEEK OF Oct 13–19, 2025 ===== -->
+<div class="schedule" id="week-2025-10-13" style="display:none">
+<div class="page-grid">
+<div class="page-col">
+<div class="card">
+<div class="accent"></div>
+<h2>Life &amp; Ministry Meeting</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Chairman</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="39 — Make a Good Name With God"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Middle Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="151 — He Will Call"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="124 — Ever Loyal"/></div>
+</div>
+</div>
+</div>
+<div class="card treasures">
+<div class="accent" style="background-color:#3C7F8B"></div>
+<h2 style="color:#2A6B77">Treasures From God’s Word</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered, before 1 -->
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">1. “Go to the House of Mourning”</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">2. Spiritual Gems</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">3. Bible Reading</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card ayf">
+<div class="accent" style="background-color:#D68F00"></div>
+<h2 style="color:#9B6D17">Apply Yourself to the Field Ministry</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">4. Starting a Conversation</div><div class="item-time">(2 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">5. Starting a Conversation</div><div class="item-time">(2 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">6. Following Up</div><div class="item-time">(2 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">7. Explaining Your Beliefs</div><div class="item-time">(5 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card living">
+<div class="accent" style="background-color:#BF2F13"></div>
+<h2 style="color:#942926">Living as Christians</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">8. Build Strong Faith in the Resurrection</div><div class="item-time">(15 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">9. Congregation Bible Study</div><div class="item-time">(30 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Concluding Comments</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered at very end -->
+</div>
+</div>
+<div class="title" style="display:none">Oct 13–19, 2025</div>
+</div>
+<div class="page-col">
+<div class="card media-checklist">
+<div class="accent" style="background-color:#374151"></div>
+<h2 style="color:#111827">Media Checklist</h2>
+<div class="content">
+<iframe loading="lazy" src="Simple_Playlist_Extractor_CHECKLIST_PERSIST_RESET_COMPACT.html" title="Extractor"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== WEEK OF Oct 6–12, 2025 ===== -->
+<div class="schedule" id="week-2025-10-06" style="display:none">
+<div class="page-grid">
+<div class="page-col">
+<div class="card">
+<div class="accent"></div>
+<h2>Life &amp; Ministry Meeting</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Chairman</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="42 — The Prayer of God’s Servant"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Middle Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="160 — “Good News”!"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="34 — Walking in Integrity"/></div>
+</div>
+</div>
+</div>
+<div class="card treasures">
+<div class="accent" style="background-color:#3C7F8B"></div>
+<h2 style="color:#2A6B77">Treasures From God’s Word</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered -->
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">1. How We Show Reverence for Our Great God</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">2. Spiritual Gems</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">3. Bible Reading</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card ayf">
+<div class="accent" style="background-color:#D68F00"></div>
+<h2 style="color:#9B6D17">Apply Yourself to the Field Ministry</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">4. Starting a Conversation</div><div class="item-time">(1 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">5. Starting a Conversation</div><div class="item-time">(2 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">6. Following Up</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">7. Making Disciples</div><div class="item-time">(5 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card living">
+<div class="accent" style="background-color:#BF2F13"></div>
+<h2 style="color:#942926">Living as Christians</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">8. Are You Using “Truths We Love to Teach”?</div><div class="item-time">(15 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">9. Congregation Bible Study</div><div class="item-time">(30 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Concluding Comments</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered -->
+</div>
+</div>
+<div class="title" style="display:none">Oct 6–12, 2025</div>
+</div>
+<div class="page-col">
+<div class="card media-checklist">
+<div class="accent" style="background-color:#374151"></div>
+<h2 style="color:#111827">Media Checklist</h2>
+<div class="content">
+<iframe loading="lazy" src="Simple_Playlist_Extractor_CHECKLIST_PERSIST_RESET_COMPACT.html" title="Extractor"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== WEEK OF Sept 29–Oct 5, 2025 ===== -->
+<div class="schedule" id="week-2025-09-29" style="display:none">
+<div class="page-grid">
+<div class="page-col">
+<div class="card">
+<div class="accent"></div>
+<h2>Life &amp; Ministry Meeting</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Chairman</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="93 — Bless Our Meeting Together"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Middle Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="131 — “What God Has Yoked Together”"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="51 — To God We Are Dedicated!"/></div>
+</div>
+</div>
+</div>
+<div class="card treasures">
+<div class="accent" style="background-color:#3C7F8B"></div>
+<h2 style="color:#2A6B77">Treasures From God’s Word</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered -->
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">1. Strengthen Your Threefold Cord</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">2. Spiritual Gems</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">3. Bible Reading</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card ayf">
+<div class="accent" style="background-color:#D68F00"></div>
+<h2 style="color:#9B6D17">Apply Yourself to the Field Ministry</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">4. Starting a Conversation</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">5. Following Up</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">6. Talk</div><div class="item-time">(5 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card living">
+<div class="accent" style="background-color:#BF2F13"></div>
+<h2 style="color:#942926">Living as Christians</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">7. When Marital Problems Arise, Keep Jehovah in the Picture</div><div class="item-time">(15 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">8. Congregation Bible Study</div><div class="item-time">(30 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Concluding Comments</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered -->
+</div>
+</div>
+<div class="title" style="display:none">Sept 29–Oct 5, 2025</div>
+</div>
+<div class="page-col">
+<div class="card media-checklist">
+<div class="accent" style="background-color:#374151"></div>
+<h2 style="color:#111827">Media Checklist</h2>
+<div class="content">
+<iframe loading="lazy" src="Simple_Playlist_Extractor_CHECKLIST_PERSIST_RESET_COMPACT.html" title="Extractor"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div><div class="schedule" id="week-2025-11-03" style="display:none">
+<div class="page-grid">
+<div class="page-col">
+<div class="card">
+<div class="accent"></div>
+<h2>Life &amp; Ministry Meeting</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Chairman</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="93 — Bless Our Meeting Together"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Middle Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="131 — “What God Has Yoked Together”"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs161" pattern="[0-9]*" placeholder="1–161" type="text" value="51 — To God We Are Dedicated!"/></div>
+</div>
+</div>
+</div>
+<div class="card treasures">
+<div class="accent" style="background-color:#3C7F8B"></div>
+<h2 style="color:#2A6B77">Treasures From God’s Word</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Opening Comments</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered -->
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">1. A Story of Unfailing Love</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">2. Spiritual Gems</div><div class="item-time">(10 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">3. Bible Reading</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card ayf">
+<div class="accent" style="background-color:#D68F00"></div>
+<h2 style="color:#9B6D17">Apply Yourself to the Field Ministry</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">4. Starting a Conversation</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">5. Following Up</div><div class="item-time">(4 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">6. Making Disciples</div><div class="item-time">(5 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card living">
+<div class="accent" style="background-color:#BF2F13"></div>
+<h2 style="color:#942926">Living as Christians</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">7. “The Generous Person Will Be Blessed”</div><div class="item-time">(15 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">8. Congregation Bible Study</div><div class="item-time">(30 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt">
+<div class="item-label">Concluding Comments</div><div class="item-time">(3 min.)</div>
+</div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div> <!-- unnumbered -->
+</div>
+</div>
+<div class="title" style="display:none">Nov 3–9, 2025</div>
+</div>
+<div class="page-col">
+<div class="card media-checklist">
+<div class="accent" style="background-color:#374151"></div>
+<h2 style="color:#111827">Media Checklist</h2>
+<div class="content">
+<iframe loading="lazy" src="Simple_Playlist_Extractor_CHECKLIST_PERSIST_RESET_COMPACT.html" title="Extractor"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script id="song-fixedwidth-calc">
+(function(){
+  function measure(text, font){
+    var canvas = measure._c || (measure._c = document.createElement('canvas'));
+    var ctx = canvas.getContext('2d');
+    ctx.font = font;
+    return ctx.measureText(text).width;
+  }
+  function computeOnce(){
+    var dl = document.getElementById('songs161');
+    if (!dl) return;
+    var opts = Array.from(dl.querySelectorAll('option'));
+    if (!opts.length) return;
+    // Build a representative font from any song input (fallback to body)
+    var probe = document.querySelector('input.song-input') || document.body;
+    var cs = window.getComputedStyle(probe);
+    var font = cs.font || [cs.fontStyle, cs.fontVariant, cs.fontWeight, cs.fontSize, cs.fontFamily].filter(Boolean).join(' ');
+    // Find max width string by value (full "n — title")
+    var maxPx = 0;
+    for (var i=0;i<opts.length;i++){
+      var v = opts[i].value || opts[i].textContent || '';
+      var px = Math.ceil(measure(v, font));
+      if (px > maxPx) maxPx = px;
+    }
+    // Add padding + borders + breathing room
+    var padL = parseFloat(cs.paddingLeft) || 8;
+    var padR = parseFloat(cs.paddingRight) || 8;
+    var bdL = parseFloat(cs.borderLeftWidth) || 1;
+    var bdR = parseFloat(cs.borderRightWidth) || 1;
+    var extra = 18;
+    var total = Math.ceil(maxPx + padL + padR + bdL + bdR + extra);
+    document.documentElement.style.setProperty('--song-input-width', total + 'px');
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', computeOnce, {once:true});
+  } else {
+    computeOnce();
+  }
+})();
+</script>
+</div></div><script id="neutralize-extractor-autoload">
+(function(){
+  try {
+    // Prevent auto-open state from a previous session
+    localStorage.removeItem('tuesday:extractorMode');
+  } catch(e){}
+
+  // Ensure the extractor panel stays hidden even if other scripts run
+  document.addEventListener('DOMContentLoaded', function(){
+    try {
+      var ex = document.getElementById('extractorView');
+      if (ex) {
+        ex.classList.add('hidden');
+        ex.style.display = 'none';
+      }
+      document.body.classList.remove('mode-extractor');
+    } catch(e){}
+  });
+})();
+</script></body>
+</html>
