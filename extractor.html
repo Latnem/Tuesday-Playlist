@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Playlist Extractor — Checklist + Inserts + Row Add (Persist + Reset, Compact Controls)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0b0c10;
+      --muted:#6b7280;
+      --muted-2:#9ca3af;
+      --border:#e5e7eb;
+      --primary:#059669;
+      --primary-ink:#ffffff;
+      --row:#fbfbfb;
+      --row-alt:#f7f7f7;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui; color:var(--text); background:var(--bg);}
+    .container{max-width:980px;margin:24px auto 80px;padding:0 16px;}
+    .dropzone{border:2px dashed #cfd3dc;border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;color:var(--muted);}
+    .dz-icon{width:42px;height:42px;opacity:.9;}
+    input[type="file"]{display:none;}
+    .filemeta{margin-top:6px;color:var(--muted-2);font-size:.9rem;}
+    .controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px;}
+    .btn{border:1px solid var(--border);background:#fff;color:var(--text);border-radius:10px;padding:7px 12px;cursor:pointer;font-weight:700;}
+    .btn[disabled]{opacity:.5;cursor:not-allowed;}
+    .btn-primary{background:var(--primary);color:var(--primary-ink);border-color:#047857;}
+    .icon-btn{border:1px solid var(--border);background:#fff;width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-weight:800;}
+    .error{margin:14px 0;color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;padding:10px 12px;border-radius:10px;white-space:pre-wrap;}
+    .results{margin-top:18px;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+    .results header{padding:12px 14px;border-bottom:1px solid var(--border);background:#fafafa;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+    .opts{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+    .opt{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;}
+    .opt input[type="text"]{padding:8px 10px;border:1px solid var(--border);border-radius:10px;min-width:33%;}
+    table{width:100%;border-collapse:collapse;}
+    th,td{border-top:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:middle;}
+    tbody tr:nth-child(odd){background:var(--row);}
+    tbody tr:nth-child(even){background:var(--row-alt);}
+    tbody tr:hover{background:#eef2ff;}
+    .col-check{width:44px;}
+    .col-actions{width:64px;text-align:right;}
+    .insert-row td{font-weight:800;}
+    .editable{outline:none;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="dropzone" class="dropzone">
+      <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 16V4" stroke-width="2"/><path d="M7 9l5-5 5 5" stroke-width="2"/><rect x="3" y="16" width="18" height="5" rx="2" stroke-width="2"></rect></svg>
+      <label for="fileInput" class="btn">Choose File</label>
+      <input id="fileInput" type="file" accept=".jwlplaylist,.jwlibrary,application/x-zip-compressed,application/zip" />
+      <div id="fileMeta" class="filemeta"></div>
+      <div class="controls">
+        <button id="extractBtn" class="btn btn-primary" disabled>Extract</button>
+        <button id="editToggleBtn" class="btn">Edit</button>
+        <button id="resetBtn" class="btn">Reset</button>
+      </div>
+    </div>
+
+    <div id="errorBox" class="error" hidden></div>
+
+    <section id="results" class="results" hidden>
+      <header>
+        <div class="opts">
+          <label class="opt"><input id="chkInserts" type="checkbox" disabled /> Add inserts</label>
+          <label class="opt">MIDDLE SONG: <input id="middleSongTitle" type="text" disabled /></label>
+        </div>
+        <span id="resultCount" class="muted small">0 items</span>
+      </header>
+      <table id="labelsTable">
+        <thead>
+          <tr>
+            <th class="col-check"></th>
+            <th>Results</th>
+            <th class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+  <script>
+    const LS_KEY = 'spe_state_v1';
+
+    const fileInput=document.getElementById('fileInput'),
+      extractBtn=document.getElementById('extractBtn'),
+      editToggleBtn=document.getElementById('editToggleBtn'),
+      resetBtn=document.getElementById('resetBtn'),
+      errorBox=document.getElementById('errorBox'),
+      results=document.getElementById('results'),
+      resultCount=document.getElementById('resultCount'),
+      tbody=document.querySelector('#labelsTable tbody'),
+      chkInserts=document.getElementById('chkInserts'),
+      middleSongTitle=document.getElementById('middleSongTitle'),
+      fileMeta=document.getElementById('fileMeta');
+
+    let chosenFile=null, extractedLabels=[], insertsOn=false, manualRows=[], editingEnabled=false;
+
+    function saveState(){
+      try{
+        const state = {
+          extractedLabels,
+          insertsOn,
+          manualRows,
+          middleSongTitle: middleSongTitle.value || ''
+        };
+        localStorage.setItem(LS_KEY, JSON.stringify(state));
+      }catch(e){ /* ignore quota errors */ }
+    }
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if(!raw) return false;
+        const state = JSON.parse(raw);
+        if(state && Array.isArray(state.extractedLabels) && state.extractedLabels.length){
+          extractedLabels = state.extractedLabels;
+          insertsOn = !!state.insertsOn;
+          manualRows = Array.isArray(state.manualRows) ? state.manualRows : [];
+          middleSongTitle.value = state.middleSongTitle || '';
+          results.hidden = false;
+          chkInserts.disabled = false;
+          chkInserts.checked = insertsOn;
+          middleSongTitle.disabled = false;
+          render();
+          return true;
+        }
+      }catch(e){ }
+      return false;
+    }
+
+    function clearError(){errorBox.hidden=true;errorBox.textContent='';}
+    function showError(m){errorBox.textContent=m;errorBox.hidden=false;}
+    function updateFileMeta(){fileMeta.textContent=chosenFile?`${chosenFile.name} • ${(chosenFile.size/1024).toFixed(1)} KB`:"";}
+
+    document.addEventListener('DOMContentLoaded', loadState);
+
+    fileInput.addEventListener('change',e=>{chosenFile=e.target.files[0];extractBtn.disabled=!chosenFile;updateFileMeta();});
+    editToggleBtn.addEventListener('click',()=>{
+      editingEnabled = !editingEnabled;
+      editToggleBtn.textContent = editingEnabled ? 'Editing On' : 'Edit';
+      render();
+    });
+    resetBtn.addEventListener('click',()=>{
+      localStorage.removeItem(LS_KEY);
+      location.reload();
+    });
+    chkInserts.addEventListener('change',()=>{insertsOn=chkInserts.checked; saveState(); render();});
+    middleSongTitle.addEventListener('input',()=>{ if(insertsOn){ saveState(); render(); } });
+
+    extractBtn.addEventListener('click',async()=>{
+      clearError();tbody.innerHTML="";extractedLabels=[];manualRows=[];chkInserts.checked=false;insertsOn=false;
+      try{
+        const buf=await chosenFile.arrayBuffer();
+        const zip=await JSZip.loadAsync(buf);
+        const dbEntry=Object.values(zip.files).find(f=>!f.dir&&f.name.toLowerCase().endsWith('.db'));
+        if(!dbEntry) throw new Error('No .db file found inside the archive.');
+        const dbArrayBuffer=await dbEntry.async('arraybuffer');
+        const SQL=await initSqlJs({ locateFile:f=>`https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${f}`});
+        const db=new SQL.Database(new Uint8Array(dbArrayBuffer));
+        const {labels}=extractLabelsStrict(db);
+        extractedLabels=labels.slice();
+
+        results.hidden=false;
+        chkInserts.disabled=false;
+        middleSongTitle.disabled=false;
+
+        saveState();
+        render();
+      }catch(e){showError(e.message||String(e));}
+    });
+
+    function extractLabelsStrict(db){
+      const labels=[];
+      function exists(n){return !!(db.exec(`SELECT name FROM sqlite_master WHERE type='table' AND lower(name)=lower('${n}')`)[0]);}
+      function add(sql){try{const r=db.exec(sql);(r[0]?.values||[]).forEach(v=>{const t=(v[0]||"").toString().trim();if(t)labels.push(t);});}catch{}}
+      if(exists('PlaylistItem')) add("SELECT Label FROM PlaylistItem WHERE Label IS NOT NULL");
+      const seen=new Set(), out=[]; for(const l of labels){const k=l.toLowerCase(); if(!seen.has(k)){seen.add(k); out.push(l);}}
+      return {labels: out};
+    }
+
+    function buildAutoInserts(baseList){
+      let out = baseList.slice();
+      out.splice(0,0,{__insert:true,text:'OPENING SONG'});
+      const q=(middleSongTitle.value||'').trim().toLowerCase();
+      if(q){
+        const idx=baseList.findIndex(x=>(x||'').toLowerCase().includes(q));
+        if(idx>=0){ out.splice(idx+1,0,{__insert:true,text:'MIDDLE SONG'}); }
+      }
+      const targetClosing = Math.max(0, out.length - 1);
+      out.splice(targetClosing,0,{__insert:true,text:'CLOSING SONG'});
+      return out;
+    }
+
+    function buildWithManualRows(list){
+      const out = list.slice();
+      manualRows.forEach(m=>{
+        const idx = Math.min(Math.max(0,m.afterIndex+1), out.length);
+        out.splice(idx,0,{__insert:true,__manual:true,id:m.id,text:m.text});
+      });
+      return out;
+    }
+
+    function getRenderedList(){
+      const base = extractedLabels.slice();
+      const withAuto = insertsOn ? buildAutoInserts(base) : base;
+      return buildWithManualRows(withAuto);
+    }
+
+    function addManualRow(afterRenderedIndex){
+      manualRows.push({ id:'m'+Date.now()+Math.random().toString(36).slice(2), afterIndex:afterRenderedIndex, text:'NEW LINE' });
+      saveState();
+      render();
+    }
+
+    function render(){
+      const rendered = getRenderedList();
+      tbody.innerHTML='';
+      rendered.forEach((item,i)=>{
+        const isInsert=typeof item!=='string' && item && item.__insert;
+        const isManual=isInsert && item.__manual;
+        const label=isInsert?item.text:item;
+        const tr=document.createElement('tr');
+        tr.dataset.row=i;
+
+        const tdCheck=document.createElement('td');
+        tdCheck.className='col-check';
+        if(!isInsert){
+          const cb=document.createElement('input');
+          cb.type='checkbox';cb.className='row-check';cb.dataset.label=label;
+          tdCheck.appendChild(cb);
+        }
+        tr.appendChild(tdCheck);
+
+        const td=document.createElement('td');
+        if(isInsert){
+          tr.className='insert-row';
+          td.textContent=label;
+          if(isManual){
+            td.contentEditable = editingEnabled ? "true":"false";
+            td.classList.toggle('editable',editingEnabled);
+            td.addEventListener('blur',()=>{
+              const m=manualRows.find(mr=>mr.id===item.id);
+              if(m){ m.text=td.textContent.trim()||'NEW LINE'; saveState(); }
+            });
+          }
+        }else td.textContent=label;
+        tr.appendChild(td);
+
+        const act=document.createElement('td');
+        act.className='col-actions';
+        if(editingEnabled){
+          const plus=document.createElement('button');
+          plus.className='icon-btn'; plus.textContent='+'; plus.title='Insert bold line below';
+          plus.addEventListener('click',()=>addManualRow(i));
+          act.appendChild(plus);
+        }
+        tr.appendChild(act);
+        tbody.appendChild(tr);
+      });
+      resultCount.textContent=`${rendered.length} ${rendered.length===1?'item':'items'}`;
+    }
+  </script>
+</body>
+</html>
