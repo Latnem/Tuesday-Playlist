@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Playlist Extractor — EndAction (Continue merges through Freeze)</title>
+  <title>Playlist Extractor — Tuesday (no Public Talk / Watchtower)</title>
   <style>
     :root{ --bg:#ffffff; --text:#0b0c10; --muted:#6b7280; --muted-2:#9ca3af; --border:#e5e7eb; --row:#fbfbfb; --row-alt:#f7f7f7; --done:#9ca3af; --primary:#059669; --primary-ink:#fff; }
     *{box-sizing:border-box}
-    body{margin:0;font-family:ui-sans-serif,system-ui; color:var(--text); background:var(--bg);}
+    body{margin:0;font-family:ui-sans-serif,system-ui; color:var(--text); background:#fff;}
     .container{max-width:980px;margin:24px auto 80px;padding:0 16px;}
     .dropzone{border:2px dashed #cfd3dc;border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;color:var(--muted);}
     .dz-icon{width:42px;height:42px;opacity:.9;}
@@ -20,13 +20,16 @@
     .error{margin:14px 0;color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;padding:10px 12px;border-radius:10px;white-space:pre-wrap;}
     .results{margin-top:18px;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
     .results header{padding:12px 14px;border-bottom:1px solid var(--border);background:#fafafa;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+    .header-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+    .toggle{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;}
     table{width:100%;border-collapse:collapse;}
     th,td{border-top:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:middle;}
-    tbody tr:nth-child(odd){background:var(--row);}
-    tbody tr:nth-child(even){background:var(--row-alt);}
+    tbody tr:nth-child(odd){background:#fbfbfb;}
+    tbody tr:nth-child(even){background:#f7f7f7;}
     tbody tr:hover{background:#eef2ff;}
     .col-check{width:44px;}
     tr.done td:nth-child(2){ text-decoration: line-through; color: var(--done); }
+    .insert-row td{font-weight:800;}
   </style>
 </head>
 <body>
@@ -45,7 +48,11 @@
 
     <section id="results" class="results" hidden>
       <header>
-        <span id="resultCount" class="muted small">0 items</span>
+        <div class="header-left">
+          <label class="toggle"><input id="toggleInserts" type="checkbox" checked> Inserts</label>
+          <span class="muted">Tuesday</span>
+        </div>
+        <span id="resultCount" class="muted">0 items</span>
       </header>
       <table id="labelsTable">
         <thead>
@@ -64,17 +71,20 @@
       errorBox=document.getElementById('errorBox'),
       results=document.getElementById('results'),
       resultCount=document.getElementById('resultCount'),
-      tbody=document.querySelector('#labelsTable tbody');
+      tbody=document.querySelector('#labelsTable tbody'),
+      toggleInserts=document.getElementById('toggleInserts');
 
-    let chosenFile=null, extractedLabels=[];
+    let chosenFile=null, baseLabels=[], showInserts=true;
 
     function clearError(){errorBox.hidden=true;errorBox.textContent='';}
     function showError(m){errorBox.textContent=m;errorBox.hidden=false;}
     function updateFileMeta(){document.getElementById('fileMeta').textContent=chosenFile?`${chosenFile.name} • ${(chosenFile.size/1024).toFixed(1)} KB`:"";}
 
+    toggleInserts.addEventListener('change',()=>{ showInserts = toggleInserts.checked; render(); });
+
     fileInput.addEventListener('change',e=>{chosenFile=e.target.files[0];extractBtn.disabled=!chosenFile;updateFileMeta();});
     extractBtn.addEventListener('click',async()=>{
-      clearError();tbody.innerHTML="";extractedLabels=[];
+      clearError();tbody.innerHTML="";baseLabels=[];
       try{
         const buf=await chosenFile.arrayBuffer();
         const zip=await JSZip.loadAsync(buf);
@@ -85,7 +95,7 @@
         const db=new SQL.Database(new Uint8Array(dbArrayBuffer));
 
         const {labels}=extractFromEndAction(db);
-        extractedLabels=labels.slice();
+        baseLabels=labels.slice(); // array of strings
 
         results.hidden=false;
         render();
@@ -127,7 +137,7 @@
         action: remapEndAction(r.__ea) // actual: 'continue' | 'freeze' | 'stop' | 'unknown'
       }));
 
-      const SEP = ' → '; // " → "
+      const SEP = ' \u2192 '; // " → "
       const out = [];
       let i=0;
       while(i < norm.length){
@@ -158,7 +168,6 @@
               j++; // consume it
               break;
             }
-            // Some other action: stop chain before it
             break;
           }
           out.push(parts.join(SEP));
@@ -171,18 +180,10 @@
         i++;
       }
 
-      // De-duplicate adjacent identical outputs
-      const dedup = [];
-      for(const l of out){
-        const t=(l||'').trim();
-        if(!t) continue;
-        if(dedup.length && dedup[dedup.length-1] === t) continue;
-        dedup.push(t);
-      }
-      return { labels: dedup };
+      return { labels: out };
     }
 
-    // Helpers
+    // ===== Helpers =====
     function getColumns(db, table){
       const out = [];
       try{
@@ -218,9 +219,7 @@
       return out;
     }
 
-    // Remap EndAction DB code -> canonical DB meaning -> corrected ACTUAL meaning
     function remapEndAction(val){
-      // First map to DB meaning
       let dbMeaning = 'unknown';
       if(val != null){
         const s = String(val).trim().toLowerCase();
@@ -237,15 +236,51 @@
           else if(['3','freeze','freeze-frame','freeze_frame','hold'].includes(s)) dbMeaning = 'freeze';
         }
       }
-      // Apply your correction: continue→freeze, stop→continue, freeze→stop, pause→freeze
+      // Correction mapping from DB to actual behavior
       if(dbMeaning === 'continue') return 'freeze';
       if(dbMeaning === 'stop') return 'continue';
       if(dbMeaning === 'freeze') return 'stop';
-      if(dbMeaning === 'pause') return 'freeze'; // treat pause like freeze visually
+      if(dbMeaning === 'pause') return 'freeze';
       return 'unknown';
     }
 
-    // Render with strike-through on check
+    // ===== Tuesday Auto Inserts (toggleable; NO Public Talk/Watchtower) =====
+    function applyAutoInserts(list){
+      if(!showInserts) return list.map(t => ({__insert:false, text:t}));
+
+      const withInserts = list.map(t => ({__insert:false, text:t}));
+
+      // Insert OPENING SONG at top
+      withInserts.splice(0,0,{__insert:true, text:'OPENING SONG'});
+
+      // Find ALL numbered items "1.".."162." (no Public Talk anchor on Tuesday)
+      const reNum = /(?:^|\s)(?:1[0-5]\d|16[0-2]|[1-9]\d|[1-9])\.(?=\s|$)/;
+      const numberedIdxs = [];
+      for(let i=0;i<withInserts.length;i++){
+        const entry = withInserts[i];
+        if(entry.__insert) continue; // don't treat inserts as songs
+        if(reNum.test(entry.text)) numberedIdxs.push(i);
+      }
+
+      if(numberedIdxs.length >= 2){
+        // Insert MIDDLE SONG *before the SECOND* detected number
+        const idxSecond = numberedIdxs[1];
+        withInserts.splice(idxSecond, 0, {__insert:true, text:'MIDDLE SONG'});
+      } else if (numberedIdxs.length === 1){
+        // Fallback: if only one song detected, place MIDDLE SONG right after that first song
+        const idxFirst = numberedIdxs[0] + 1;
+        withInserts.splice(idxFirst, 0, {__insert:true, text:'MIDDLE SONG'});
+      }
+      // else: none found -> skip MIDDLE SONG
+
+      // Insert CLOSING SONG as second last line
+      const pos = Math.max(0, withInserts.length - 1);
+      withInserts.splice(pos, 0, {__insert:true, text:'CLOSING SONG'});
+
+      return withInserts;
+    }
+
+    // ===== Rendering =====
     function onCheckChange(e){
       const cb = e.target;
       if(!cb.classList.contains('row-check')) return;
@@ -255,22 +290,28 @@
     }
 
     function render(){
-      const rendered = extractedLabels.slice();
+      const rendered = applyAutoInserts(baseLabels);
       tbody.innerHTML='';
-      rendered.forEach((label,i)=>{
+      rendered.forEach((entry,i)=>{
+        const isInsert = entry.__insert === true;
+        const text = entry.text;
+
         const tr=document.createElement('tr');
         tr.dataset.row=i;
+        if(isInsert) tr.classList.add('insert-row');
 
         const tdCheck=document.createElement('td');
         tdCheck.className='col-check';
-        const cb=document.createElement('input');
-        cb.type='checkbox';cb.className='row-check';
-        cb.addEventListener('change', onCheckChange);
-        tdCheck.appendChild(cb);
+        if(!isInsert){
+          const cb=document.createElement('input');
+          cb.type='checkbox';cb.className='row-check';
+          cb.addEventListener('change', onCheckChange);
+          tdCheck.appendChild(cb);
+        }
         tr.appendChild(tdCheck);
 
         const td=document.createElement('td');
-        td.textContent=label;
+        td.textContent=text;
         tr.appendChild(td);
 
         tbody.appendChild(tr);
