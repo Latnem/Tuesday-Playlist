@@ -449,7 +449,52 @@ header, .topHeader, .card, .card .content{overflow:visible !important}
 button[aria-label="Extractor"] {
   display: none !important;
 }
-</style></head>
+</style>
+<style id="match-saturday-toolbar-and-buttons">
+  /* Match Saturday: white toolbar */
+  .topbar { background: #ffffff !important; } /* Saturday uses white */
+
+  /* Keep buttons grouped on the right if a .right container exists */
+  .topbar .right { margin-left: auto !important; }
+
+  /* Make Load/Save/Clear exactly the same size */
+  #btnLoad, #btnSave, #btnClear, #btnSaveMain {
+    padding: 6px 12px !important;
+    font-size: 0.9rem !important;
+    border-radius: 8px !important;
+    line-height: 1.2 !important;
+    height: 32px !important;
+    min-width: 80px;
+    box-sizing: border-box;
+    border-width: 1px;
+  }
+
+  /* Exact Saturday colors + hover shades */
+  /* Load = gray with white text; hover darker */
+  #btnLoad {
+    background: #888 !important;
+    color: #fff !important;
+    border-color: #888 !important;
+  }
+  #btnLoad:hover { background: #666 !important; }
+
+  /* Save = blue; hover darker blue */
+  #btnSave, #btnSaveMain {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border: 1px solid #1d4ed8 !important;
+  }
+  #btnSave:hover, #btnSaveMain:hover { background: #1d4ed8 !important; }
+
+  /* Clear = red; hover darker red */
+  #btnClear {
+    background: #BF2F13 !important;
+    color: #ffffff !important;
+    border: 1px solid #BF2F13 !important;
+  }
+  #btnClear:hover { background: #a2270f !important; }
+</style>
+</head>
 <body>
 <!-- Embedded Extractor (data-URI) -->
 <section aria-label="Extractor Page" class="hidden" id="extractorView" style="margin:8px 0 12px;">
