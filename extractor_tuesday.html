@@ -20,7 +20,7 @@
     .error{margin:14px 0;color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;padding:10px 12px;border-radius:10px;white-space:pre-wrap;}
     .results{margin-top:18px;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
     .results header{padding:12px 14px;border-bottom:1px solid var(--border);background:#fafafa;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
-    .header-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+    .header-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
     .toggle{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;}
     table{width:100%;border-collapse:collapse;}
     th,td{border-top:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:middle;}
@@ -30,6 +30,17 @@
     .col-check{width:44px;}
     tr.done td:nth-child(2){ text-decoration: line-through; color: var(--done); }
     .insert-row td{font-weight:800;}
+
+    /* Back arrow button */
+    .back-btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:34px;height:34px;border-radius:8px;
+      border:1px solid var(--border);background:#fff;color:#111827;
+      cursor:pointer;font-size:18px;line-height:1;
+    }
+    .back-btn:hover{background:#f3f4f6;}
+    .back-btn:focus{outline:2px solid #93c5fd; outline-offset:2px;}
+    .muted{color:var(--muted);}
   </style>
 </head>
 <body>
@@ -49,6 +60,7 @@
     <section id="results" class="results" hidden>
       <header>
         <div class="header-left">
+          <button id="backBtn" class="back-btn" title="Back" aria-label="Back" hidden>←</button>
           <label class="toggle"><input id="toggleInserts" type="checkbox" checked> Inserts</label>
           <span class="muted">Tuesday</span>
         </div>
@@ -56,7 +68,7 @@
       </header>
       <table id="labelsTable">
         <thead>
-          <tr><th class="col-check"></th><th>Results</th></tr>
+          <tr><th class="col-check"></th><th></th></tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -72,7 +84,9 @@
       results=document.getElementById('results'),
       resultCount=document.getElementById('resultCount'),
       tbody=document.querySelector('#labelsTable tbody'),
-      toggleInserts=document.getElementById('toggleInserts');
+      toggleInserts=document.getElementById('toggleInserts'),
+      dropzone=document.getElementById('dropzone'),
+      backBtn=document.getElementById('backBtn');
 
     let chosenFile=null, baseLabels=[], showInserts=true;
 
@@ -82,9 +96,40 @@
 
     toggleInserts.addEventListener('change',()=>{ showInserts = toggleInserts.checked; render(); });
 
-    fileInput.addEventListener('change',e=>{chosenFile=e.target.files[0];extractBtn.disabled=!chosenFile;updateFileMeta();});
+    fileInput.addEventListener('change',e=>{
+      chosenFile=e.target.files[0];
+      extractBtn.disabled=!chosenFile;
+      updateFileMeta();
+    });
+
+    // Back arrow: show uploader, hide results
+    backBtn.addEventListener('click', ()=>{
+      results.hidden = true;
+      backBtn.hidden = true;
+      dropzone.hidden = false;
+      dropzone.style.display = ''; // reset
+      dropzone.setAttribute('aria-hidden','false');
+      // optional: clear table
+      tbody.innerHTML = '';
+      resultCount.textContent = '0 items';
+      baseLabels = [];
+      // allow re-selecting a new file
+      fileInput.value = '';
+      extractBtn.disabled = true;
+    });
+
     extractBtn.addEventListener('click',async()=>{
       clearError();tbody.innerHTML="";baseLabels=[];
+
+      // --- Robust immediate hide of upload area ---
+      dropzone.hidden = true;                 // attribute-based
+      dropzone.style.display = 'none';        // inline style fallback
+      dropzone.setAttribute('aria-hidden','true');
+
+      // Show results area right away + show back arrow
+      results.hidden = false;
+      backBtn.hidden = false;
+
       try{
         const buf=await chosenFile.arrayBuffer();
         const zip=await JSZip.loadAsync(buf);
@@ -95,11 +140,17 @@
         const db=new SQL.Database(new Uint8Array(dbArrayBuffer));
 
         const {labels}=extractFromEndAction(db);
-        baseLabels=labels.slice(); // array of strings
-
-        results.hidden=false;
+        baseLabels=labels.slice();
         render();
-      }catch(e){showError(e.message||String(e));}
+      }catch(e){
+        // If something failed, return to upload view with error
+        results.hidden = true;
+        backBtn.hidden = true;
+        dropzone.hidden = false;
+        dropzone.style.display = '';
+        dropzone.setAttribute('aria-hidden','false');
+        showError(e.message||String(e));
+      }
     });
 
     // ===== EndAction-driven extraction with corrected mapping; Continue merges THROUGH first Freeze/Stop =====
@@ -134,24 +185,22 @@
 
       const norm = rows.map(r => ({
         label: (r.__label ?? '').toString().trim(),
-        action: remapEndAction(r.__ea) // actual: 'continue' | 'freeze' | 'stop' | 'unknown'
+        action: remapEndAction(r.__ea)
       }));
 
-      const SEP = ' \u2192 '; // " → "
+      const SEP = ' \u2192 ';
       const out = [];
       let i=0;
       while(i < norm.length){
         const cur = norm[i];
         if(!cur.label){ i++; continue; }
 
-        // Actual Freeze/Stop outside a chain => standalone
         if(cur.action === 'freeze' || cur.action === 'stop'){
           out.push(cur.label);
           i++;
           continue;
         }
 
-        // Actual Continue => merge forward through Continues AND INCLUDE first Freeze/Stop as terminator
         if(cur.action === 'continue'){
           const parts = [cur.label];
           let j = i + 1;
@@ -164,8 +213,8 @@
               continue;
             }
             if(nxt.action === 'freeze' || nxt.action === 'stop'){
-              parts.push(nxt.label); // include terminator
-              j++; // consume it
+              parts.push(nxt.label);
+              j++;
               break;
             }
             break;
@@ -175,7 +224,6 @@
           continue;
         }
 
-        // Unknown/other => standalone
         out.push(cur.label);
         i++;
       }
@@ -236,7 +284,6 @@
           else if(['3','freeze','freeze-frame','freeze_frame','hold'].includes(s)) dbMeaning = 'freeze';
         }
       }
-      // Correction mapping from DB to actual behavior
       if(dbMeaning === 'continue') return 'freeze';
       if(dbMeaning === 'stop') return 'continue';
       if(dbMeaning === 'freeze') return 'stop';
@@ -253,25 +300,22 @@
       // Insert OPENING SONG at top
       withInserts.splice(0,0,{__insert:true, text:'OPENING SONG'});
 
-      // Find ALL numbered items "1.".."162." (no Public Talk anchor on Tuesday)
+      // Find ALL numbered items "1.".."162."
       const reNum = /(?:^|\s)(?:1[0-5]\d|16[0-2]|[1-9]\d|[1-9])\.(?=\s|$)/;
       const numberedIdxs = [];
       for(let i=0;i<withInserts.length;i++){
         const entry = withInserts[i];
-        if(entry.__insert) continue; // don't treat inserts as songs
+        if(entry.__insert) continue;
         if(reNum.test(entry.text)) numberedIdxs.push(i);
       }
 
       if(numberedIdxs.length >= 2){
-        // Insert MIDDLE SONG *before the SECOND* detected number
         const idxSecond = numberedIdxs[1];
         withInserts.splice(idxSecond, 0, {__insert:true, text:'MIDDLE SONG'});
       } else if (numberedIdxs.length === 1){
-        // Fallback: if only one song detected, place MIDDLE SONG right after that first song
         const idxFirst = numberedIdxs[0] + 1;
         withInserts.splice(idxFirst, 0, {__insert:true, text:'MIDDLE SONG'});
       }
-      // else: none found -> skip MIDDLE SONG
 
       // Insert CLOSING SONG as second last line
       const pos = Math.max(0, withInserts.length - 1);
