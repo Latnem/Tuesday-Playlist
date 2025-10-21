@@ -494,6 +494,24 @@ button[aria-label="Extractor"] {
   }
   #btnClear:hover { background: #a2270f !important; }
 </style>
+
+<style id='copied-from-saturday-buttons'>
+
+</style>
+
+<style id="tuesday-match-saturday-compact">
+  /* Remove forced width/height so Tuesday equals Saturday exactly */
+  #btnLoad, #btnSave, #btnClear, #btnSaveMain {
+    min-width: unset !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 6px 12px !important; /* same as Saturday base .btn */
+    font-size: 0.9rem !important;
+    border-radius: 8px !important;
+    line-height: normal !important;
+    box-sizing: border-box;
+  }
+</style>
 </head>
 <body>
 <!-- Embedded Extractor (data-URI) -->
@@ -2657,5 +2675,152 @@ document.addEventListener('DOMContentLoaded', function(){
     } catch(e){}
   });
 })();
-</script></body>
+</script>
+<script id="remove-old-weeks-script">
+(function(){
+  try {
+    const targetsRaw = [
+      "Sept 29–Oct 5, 2025",
+      "Sept 29-Oct 5, 2025",
+      "Sep 29–Oct 5, 2025",
+      "Sep 29-Oct 5, 2025",
+      "Oct 6–12, 2025",
+      "Oct 6-12, 2025",
+      "Oct 13–19, 2025",
+      "Oct 13-19, 2025"
+    ];
+    const norm = s => String(s||"")
+      .replace(/\u2013|\u2014|\u2212/g, "-")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+
+    const targets = new Set(targetsRaw.map(norm));
+
+    // 1) Remove from any <select> (Week picker) options by matching visible text
+    document.querySelectorAll("select").forEach(sel => {
+      // collect to remove to avoid live collection issues
+      const toRemove = [];
+      sel.querySelectorAll("option").forEach(opt => {
+        const txt = norm(opt.textContent || opt.value);
+        if (targets.has(txt)) toRemove.append = (toRemove.append||[]).concat(opt);
+      });
+      (toRemove.append||[]).forEach(opt => opt.remove());
+    });
+
+    // 2) Hide/remove schedule blocks fed by hidden .title nodes that match the targets
+    document.querySelectorAll(".title").forEach(title => {
+      const t = norm(title.textContent);
+      if (targets.has(t)) {
+        // Try to remove the closest schedule container that belongs to this title
+        // Assumes structure: <!-- WEEK --> <div class="schedule"> ... </div> <div class="title">...</div>
+        // We'll remove the .schedule immediately preceding the .title if found
+        let prev = title.previousElementSibling;
+        let removed = false;
+        while (prev) {
+          if (prev.classList && prev.classList.contains("schedule")) {
+            prev.remove();
+            removed = true;
+            break;
+          }
+          prev = prev.previousElementSibling;
+        }
+        // Also remove the matching title to avoid dangling entries
+        title.remove();
+        // If there's an associated option elsewhere dynamically generated, we can't reach it,
+        // but step (1) above handles native <select> options.
+      }
+    });
+  } catch(e) { /* silently ignore */ }
+})();
+</script>
+
+<script id="strict-remove-old-weeks">
+(function() {
+  const TARGET_IDS = new Set(["week-2025-09-29","week-2025-10-06","week-2025-10-13"]);
+  const targetTextRaw = [
+    "Sept 29–Oct 5, 2025","Sept 29-Oct 5, 2025","Sep 29–Oct 5, 2025","Sep 29-Oct 5, 2025",
+    "Oct 6–12, 2025","Oct 6-12, 2025",
+    "Oct 13–19, 2025","Oct 13-19, 2025"
+  ];
+  const norm = s => String(s||"").replace(/\u2013|\u2014|\u2212/g,"-").replace(/\s+/g," ").trim().toLowerCase();
+  const TARGET_TEXTS = new Set(targetTextRaw.map(norm));
+
+  function purgeSelectOptions(sel) {
+    const opts = Array.from(sel.querySelectorAll("option"));
+    let removed = false;
+    for (const opt of opts) {
+      const v = (opt.getAttribute("value")||"").trim();
+      const t = norm(opt.textContent||opt.value||"");
+      if (TARGET_IDS.has(v) || TARGET_TEXTS.has(t)) {
+        opt.remove();
+        removed = true;
+      }
+    }
+    // If selected option was removed, pick first available
+    if (removed) {
+      if (!sel.value || TARGET_IDS.has(sel.value)) {
+        const first = sel.querySelector("option");
+        if (first) {
+          sel.value = first.value;
+          sel.dispatchEvent(new Event("change", {bubbles:true}));
+        }
+      }
+    }
+  }
+
+  function purgeAllSelects() {
+    document.querySelectorAll("select").forEach(purgeSelectOptions);
+  }
+
+  function purgeScheduleBlocks() {
+    // Remove schedule containers referenced by IDs
+    TARGET_IDS.forEach(id => {
+      const byId = document.getElementById(id);
+      if (byId) {
+        const sched = byId.closest(".schedule") || byId;
+        sched.remove();
+      }
+    });
+    // Remove hidden title stubs that might re-populate lists
+    document.querySelectorAll(".title").forEach(title => {
+      const t = norm(title.textContent);
+      if (TARGET_TEXTS.has(t)) {
+        title.remove();
+      }
+    });
+  }
+
+  function installObservers() {
+    // If something repopulates the week select dynamically, remove targets as they appear
+    const obs = new MutationObserver(() => {
+      purgeAllSelects();
+    });
+    document.querySelectorAll("select").forEach(sel => {
+      obs.observe(sel, {childList: true, subtree: true});
+    });
+    // Also watch body for inserted schedule blocks/titles
+    const obs2 = new MutationObserver(() => {
+      purgeScheduleBlocks();
+      purgeAllSelects();
+    });
+    obs2.observe(document.body, {childList: true, subtree: true});
+  }
+
+  function init() {
+    try {
+      purgeScheduleBlocks();
+      purgeAllSelects();
+      installObservers();
+    } catch(e) { /* no-op */ }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
 </html>
