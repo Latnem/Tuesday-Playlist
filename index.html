@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Chatsworth Sign Language — Sept–Oct 2025</title>
+<title>Tuesday Playlist</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -267,6 +267,13 @@ header *,
   pointer-events: none !important;
 }
 
+
+
+label.week-picker.compact select.compact-select{
+  padding:0 .4rem;
+  height:1.9rem !important;
+  font-size:.9rem;
+}
 </style>
 <style>
 /* Saturday alignment + sizing */
@@ -494,41 +501,303 @@ button[aria-label="Extractor"] {
   }
   #btnClear:hover { background: #a2270f !important; }
 </style>
+<style>
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:.75rem}
+.topbar .left{display:inline-flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.topbar .right{display:inline-flex;align-items:center;gap:.5rem}
+.week-caption{white-space:nowrap;font-size:.95rem}
+label.week-picker.compact{display:inline-flex;align-items:center}
+label.week-picker.compact select.compact-select{padding:0 .5rem}
+</style><style id="toolbar-match-saturday">
+/* === Twin with Saturday v6.5 toolbar/buttons === */
+.btn {
+  appearance: none !important;
+  border: 1px solid #ddd !important;
+  background: #fff !important;
+  padding: 6px 12px !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  font-size: 0.9rem !important;
+  line-height: 1.2 !important;
+  box-sizing: border-box !important;
+}
+.btn:hover { background: #f4f4f4 !important; }
+#btnLoad {
+  background: #888 !important;
+  color: #fff !important;
+  border-color: #888 !important;
+}
+#btnLoad:hover { background: #666 !important; }
+#btnSave, #btnSaveMain {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #1d4ed8 !important;
+}
+#btnSave:hover, #btnSaveMain:hover { background: #1d4ed8 !important; }
+#btnClear, #btnClearMain {
+  background: #BF2F13 !important;
+  color: #ffffff !important;
+  border: 1px solid #BF2F13 !important;
+}
+#btnClear:hover, #btnClearMain:hover { background: #a2270f !important; }
 
-<style id='copied-from-saturday-buttons'>
+/* Week select identical to Saturday's native select */
+.topbar .left label.week-picker.compact {
+  /* remove any border/padding wrapper so it matches Saturday's bare select */
+  display: inline-flex;
+  align-items: center;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+.topbar .left label.week-picker.compact select.compact-select {
+  border: 1px solid #ddd !important;
+  background: #fff !important;
+  padding: 2px 8px !important;
+  height: 28px !important;
+  border-radius: 6px !important;
+  font-size: 0.9rem !important;
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+  line-height: 1.2 !important;
+  box-sizing: border-box !important;
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+}
+</style><style id="btn-width-normalize">
+/* Force Tuesday buttons to hug content width exactly like Saturday */
+.topbar .right .btn,
+.topbar .btn,
+.btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  letter-spacing: normal !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+/* Match topbar spacing from Saturday */
+.topbar { display:flex; align-items:center; justify-content:space-between; gap: 12px; padding: 8px 12px; }
+.topbar .left, .topbar .right { display:flex; align-items:center; gap:8px; }
+</style><style id="btn-height-normalize">
+/* Normalize button height to Saturday's look */
+.btn,
+.topbar .btn,
+.topbar .right .btn {
+  line-height: normal !important;    /* remove extra vertical line-box space */
+  padding: 6px 12px !important;      /* exact Saturday padding */
+  border-width: 1px !important;      /* ensure 1px border */
+  min-height: 0 !important;          /* avoid UA min heights */
+  height: auto !important;           /* let padding determine height */
+  box-sizing: border-box !important;
+}
 
-</style>
+/* Re-affirm week select height */
+.topbar .left label.week-picker.compact select.compact-select {
+  height: 28px !important;
+  padding: 2px 8px !important;
+  border-radius: 6px !important;
+}
+</style><style id="tuesday-perfect-twin">
+/* === Pixel-identical twin to Saturday v6.5 === */
+/* Copy Saturday's base font system */
+:root {
+  --base-fs: clamp(14px, 1.2vw + 10px, 16px);
+  --h2-fs: clamp(18px, 1.6vw + 12px, 24px);
+  --small-fs: clamp(12px, 0.9vw + 8px, 14px);
+}
+body {
+  font-family: Arial, sans-serif !important;
+  font-size: var(--base-fs) !important;
+}
 
-<style id="tuesday-match-saturday-compact">
-  /* Remove forced width/height so Tuesday equals Saturday exactly */
-  #btnLoad, #btnSave, #btnClear, #btnSaveMain {
-    min-width: unset !important;
-    width: auto !important;
-    height: auto !important;
-    padding: 6px 12px !important; /* same as Saturday base .btn */
-    font-size: 0.9rem !important;
-    border-radius: 8px !important;
-    line-height: normal !important;
-    box-sizing: border-box;
-  }
-</style>
+/* Match Saturday topbar spacing */
+.topbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding: 8px 12px !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  border: 1px solid #eee !important;
+}
+.topbar .left, .topbar .right { display: flex !important; align-items: center !important; gap: 8px !important; }
+.topbar .right { margin-left: auto !important; }
 
-<style id="final-saturday-button-match-2">
-  /* Make Tuesday's top 3 buttons identical to Saturday (size & spacing) */
-  #btnLoad, #btnSave, #btnClear, #btnSaveMain {
-    width: auto !important;
-    height: auto !important;
-    min-width: unset !important;
-    padding: 6px 12px !important;
-    font-size: 0.9rem !important;
-    border-radius: 8px !important;
-    line-height: normal !important;
-    box-sizing: border-box;
-  }
-  /* Ensure toolbar background is Saturday white */
-  .topbar { background: #ffffff !important; }
-</style>
-</head>
+/* Buttons: clone Saturday exactly */
+.btn,
+.topbar .btn,
+.topbar .right .btn {
+  appearance: none !important;
+  border: 1px solid #ddd !important;
+  background: #fff !important;
+  padding: 6px 12px !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  font-size: 0.9rem !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+.btn:hover { background: #f4f4f4 !important; }
+#btnLoad {
+  background: #888 !important;
+  color: #fff !important;
+  border-color: #888 !important;
+}
+#btnLoad:hover { background: #666 !important; }
+#btnSave, #btnSaveMain {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #1d4ed8 !important;
+}
+#btnSave:hover, #btnSaveMain:hover { background: #1d4ed8 !important; }
+#btnClear, #btnClearMain {
+  background: #BF2F13 !important;
+  color: #ffffff !important;
+  border: 1px solid #BF2F13 !important;
+}
+#btnClear:hover, #btnClearMain:hover { background: #a2270f !important; }
+
+/* Week select identical to Saturday's native select */
+.topbar .left label.week-picker.compact {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+.topbar .left label.week-picker.compact select.compact-select {
+  border: 1px solid #ddd !important;
+  background: #fff !important;
+  padding: 2px 8px !important;
+  height: 28px !important;
+  border-radius: 6px !important;
+  font-size: 0.9rem !important;
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+}
+</style><style id="btn-lock-28px-exact">
+/* Strict: make Tuesday buttons pixel-identical to Saturday */
+.topbar .right .btn,
+.topbar .btn,
+.btn {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  height: 28px !important;        /* total box height */
+  line-height: 26px !important;   /* centers text with 1px borders */
+  padding: 0 12px !important;     /* horizontally identical */
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  font-size: 0.9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+#btnLoad {
+  background: #888 !important; color: #fff !important; border-color: #888 !important;
+}
+#btnLoad:hover { background: #666 !important; }
+#btnSave, #btnSaveMain {
+  background: #2563eb !important; color: #fff !important; border: 1px solid #1d4ed8 !important;
+}
+#btnSave:hover, #btnSaveMain:hover { background: #1d4ed8 !important; }
+#btnClear, #btnClearMain {
+  background: #BF2F13 !important; color: #fff !important; border: 1px solid #BF2F13 !important;
+}
+#btnClear:hover, #btnClearMain:hover { background: #a2270f !important; }
+</style><style id="week-select-28px-saturday">
+/* Week select matches Saturday native select; does not change button metrics */
+.topbar .left label.week-picker.compact {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+.topbar .left label.week-picker.compact select.compact-select {
+  border: 1px solid #ddd !important;
+  background: #fff !important;
+  padding: 2px 8px !important;
+  height: 28px !important;
+  border-radius: 6px !important;
+  font-size: 0.9rem !important;
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+  margin: 0 !important;
+}
+</style><style id="week-date-center-style">.center-date {
+  text-align: center;
+  margin-top: 4px;
+  font-size: 1.5rem; /* subheading size */
+  font-weight: 500;
+  margin-bottom: 12px;  /* increased whitespace after the date */
+}
+.week-date { white-space: normal; }
+
+  margin-bottom: 12px;  /* increased whitespace after the date */</style><style id="congHeader-center-style">#congHeader { text-align: center; }</style><style id="two-tone-56-tuesday">
+/* Tuesday two-tone header — rebuilt from scratch; each line 56px tall */
+#tuesdayHeaderCard {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px; /* consistent rhythm */
+ border-radius: 10px; overflow: hidden; }
+#tuesdayHeaderCard .header-top,
+#tuesdayHeaderCard .header-bottom {
+  height: 56px;
+  display: flex;
+  align-items: center;      /* vertical center */
+  justify-content: center;  /* horizontal center */
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+/* Top tone (soft cool gray) */
+#tuesdayHeaderCard .header-top {
+  background: #F1F5F8;
+  color: #333333;
+ border-top-left-radius: 10px; border-top-right-radius: 10px; }
+#tuesdayHeaderCard #titleLineTuesday {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.6rem;  /* title larger */
+  text-align: center;
+}
+/* Bottom tone (white) for date — slightly smaller than title */
+#tuesdayHeaderCard .header-bottom {
+  background: #ffffff;
+  color: #333333;
+}
+#tuesdayHeaderCard #weekDateTuesday {
+  margin: 0;
+  font-size: 1.4rem;  /* a little smaller than the title */
+  font-weight: 500;
+  text-align: center;
+}
+
+
+#tuesdayHeaderCard .header-bottom {
+  background: #ffffff;
+  color: #333333;
+  margin-bottom: 12px; /* add whitespace gap after the date line */
+}
+</style></head>
 <body>
 <!-- Embedded Extractor (data-URI) -->
 <section aria-label="Extractor Page" class="hidden" id="extractorView" style="margin:8px 0 12px;">
@@ -707,7 +976,7 @@ button[aria-label="Extractor"] {
 </datalist>
 <div class="wrapper">
 <div class="topbar">
-<div class="left">
+<div class="left"><label class="week-picker native-like compact"><span aria-hidden="true" class="icon">📅</span><select aria-label="Select week" class="compact-select" id="weekNative" style="max-width:24ch;min-width:16ch;height:1.9rem;font-size:.9rem;padding:0 .4rem;"></select></label>
 <button class="btn btn-secondary" id="btnExtractor" title="Open extractor">Extractor</button>
 </div>
 <div class="right">
@@ -715,14 +984,8 @@ button[aria-label="Extractor"] {
 <button class="btn btn-primary" id="btnSave" title="Save names for this week">Save</button>
 <button class="btn btn-danger" id="btnClear" title="Clear all inputs on this week">Clear</button>
 </div>
-</div>
+</div><div class="card" id="tuesdayHeaderCard"><div class="header-top"><div id="titleLineTuesday">Chatsworth Sign Language Congregation</div></div><div class="header-bottom"><div id="weekDateTuesday"></div></div></div>
 <!-- TOP HEADER (shared) -->
-<div class="card">
-<h2>Chatsworth Sign Language<br/>
-<span class="week-text"></span>
-<label class="week-picker native-like"><span aria-hidden="true" class="icon">📅</span><select aria-label="Select week" id="weekNative"></select></label>
-</h2>
-</div>
 <!-- ===== WEEK OF Oct 27–Nov 2, 2025 (FILLED) ===== -->
 <div class="schedule" id="week-2025-10-27" style="display:block">
 <div class="page-grid">
@@ -763,7 +1026,7 @@ button[aria-label="Extractor"] {
 <div class="content">
 <div class="item item-grid">
 <div class="ltxt">
-<div class="item-label">Opening Comments</div><div class="item-time">(3 min.)</div>
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
 </div>
 <div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
 </div> <!-- unnumbered, before 1 -->
@@ -848,99 +1111,93 @@ button[aria-label="Extractor"] {
 </div>
 </div>
 </div>
-
 <!-- ===== WEEK OF Nov 24–30, 2025 ===== -->
 <div class="schedule" id="week-2025-11-24" style="display:none">
-  <div class="title" style="display:none">Nov 24–30, 2025</div>
-  <div class="page-grid">
-    <div class="page-col">
-      <div class="card">
-        <div class="accent"></div>
-        <h2>Life &amp; Ministry Meeting</h2>
-        <div class="content">
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">Chairman</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">Opening Prayer</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">Closing Prayer</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">Opening Song</div></div>
-            <div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs162" pattern="[0-9]*" placeholder="1–161" type="text" value="44"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">Middle Song</div></div>
-            <div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs162" pattern="[0-9]*" placeholder="1–161" type="text" value="38"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">Closing Song</div></div>
-            <div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs162" pattern="[0-9]*" placeholder="1–161" type="text" value="89"/></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card treasures">
-        <div class="accent" style="background-color:#3C7F8B"></div>
-        <h2 style="color:#2A6B77">Treasures From God’s Word</h2>
-        <div class="content">
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">Opening Comments</div><div class="item-time">(3 min.)</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">1. Hope for Those “Weighed Down With Error”</div><div class="item-time">(10 min.)</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">2. Spiritual Gems</div><div class="item-time">(10 min.)</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">3. Bible Reading</div><div class="item-time">(4 min.)</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card living">
-        <div class="accent" style="background-color:#BF2F13"></div>
-        <h2 style="color:#942926">Living as Christians</h2>
-        <div class="content">
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">7. Become Jehovah’s Friend—Jehovah Forgives</div><div class="item-time">(15 min.)</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">8. Congregation Bible Study</div><div class="item-time">(30 min.)</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-          <div class="item item-grid">
-            <div class="ltxt"><div class="item-label">Concluding Comments</div><div class="item-time">(3 min.)</div></div>
-            <div class="ritem"><input class="narrow-input" type="text" placeholder="Name"/></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="page-col">
-      <div class="card media-checklist">
-        <div class="accent" style="background-color:#374151"></div>
-        <h2 style="color:#111827">Media Checklist</h2>
-        <div class="content">
-          <iframe loading="lazy" src="extractor_tuesday.html" title="Extractor"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="title" style="display:none">Nov 24–30, 2025</div>
+<div class="page-grid">
+<div class="page-col">
+<div class="card">
+<div class="accent"></div>
+<h2>Life &amp; Ministry Meeting</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Chairman</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
 </div>
-
-
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Prayer</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs162" pattern="[0-9]*" placeholder="1–161" type="text" value="44 — God’s Word—A Treasure"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Middle Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs162" pattern="[0-9]*" placeholder="1–161" type="text" value="38 — He Will Make You Strong"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Closing Song</div></div>
+<div class="ritem"><input class="narrow-input song-input" inputmode="numeric" list="songs162" pattern="[0-9]*" placeholder="1–161" type="text" value="89 — Be Obedient to Those Taking the Lead"/></div>
+</div>
+</div>
+</div>
+<div class="card treasures">
+<div class="accent" style="background-color:#3C7F8B"></div>
+<h2 style="color:#2A6B77">Treasures From God’s Word</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Opening Comments</div><div class="item-time">(3 min.)</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">1. Hope for Those “Weighed Down With Error”</div><div class="item-time">(10 min.)</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">2. Spiritual Gems</div><div class="item-time">(10 min.)</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">3. Bible Reading</div><div class="item-time">(4 min.)</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+<div class="card living">
+<div class="accent" style="background-color:#BF2F13"></div>
+<h2 style="color:#942926">Living as Christians</h2>
+<div class="content">
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">7. Become Jehovah’s Friend—Jehovah Forgives</div><div class="item-time">(15 min.)</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">8. Congregation Bible Study</div><div class="item-time">(30 min.)</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+<div class="item item-grid">
+<div class="ltxt"><div class="item-label">Concluding Comments</div><div class="item-time">(3 min.)</div></div>
+<div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
+</div>
+</div>
+</div>
+</div>
+<div class="page-col">
+<div class="card media-checklist">
+<div class="accent" style="background-color:#374151"></div>
+<h2 style="color:#111827">Media Checklist</h2>
+<div class="content">
+<iframe loading="lazy" src="extractor_tuesday.html" title="Extractor"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   try {
@@ -1140,7 +1397,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="content">
 <div class="item item-grid">
 <div class="ltxt">
-<div class="item-label">Opening Comments</div><div class="item-time">(3 min.)</div>
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
 </div>
 <div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
 </div> <!-- unnumbered, before 1 -->
@@ -2009,7 +2266,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="content">
 <div class="item item-grid">
 <div class="ltxt">
-<div class="item-label">Opening Comments</div><div class="item-time">(3 min.)</div>
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
 </div>
 <div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
 </div> <!-- unnumbered, before 1 -->
@@ -2094,7 +2351,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="accent" style="background-color:#374151"></div>
 <h2 style="color:#111827">Media Checklist</h2>
 <div class="content">
-<iframe loading="lazy" src="Extractor.html" title="Extractor"></iframe>
+<iframe loading="lazy" src="extractor_tuesday.html" title="Extractor"></iframe>
 </div>
 </div>
 </div>
@@ -2140,7 +2397,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="content">
 <div class="item item-grid">
 <div class="ltxt">
-<div class="item-label">Opening Comments</div><div class="item-time">(3 min.)</div>
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
 </div>
 <div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
 </div> <!-- unnumbered -->
@@ -2225,7 +2482,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="accent" style="background-color:#374151"></div>
 <h2 style="color:#111827">Media Checklist</h2>
 <div class="content">
-<iframe loading="lazy" src="Extractor.html" title="Extractor"></iframe>
+<iframe loading="lazy" src="extractor_tuesday.html" title="Extractor"></iframe>
 </div>
 </div>
 </div>
@@ -2271,7 +2528,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="content">
 <div class="item item-grid">
 <div class="ltxt">
-<div class="item-label">Opening Comments</div><div class="item-time">(3 min.)</div>
+<div class="item-label">Opening Comments</div><div class="item-time">(1 min.)</div>
 </div>
 <div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
 </div> <!-- unnumbered -->
@@ -2350,7 +2607,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="accent" style="background-color:#374151"></div>
 <h2 style="color:#111827">Media Checklist</h2>
 <div class="content">
-<iframe loading="lazy" src="Extractor.html" title="Extractor"></iframe>
+<iframe loading="lazy" src="extractor_tuesday.html" title="Extractor"></iframe>
 </div>
 </div>
 </div>
@@ -2473,7 +2730,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="accent" style="background-color:#374151"></div>
 <h2 style="color:#111827">Media Checklist</h2>
 <div class="content">
-<iframe loading="lazy" src="Extractor.html" title="Extractor"></iframe>
+<iframe loading="lazy" src="extractor_tuesday.html" title="Extractor"></iframe>
 </div>
 </div>
 </div>
@@ -2596,7 +2853,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="accent" style="background-color:#374151"></div>
 <h2 style="color:#111827">Media Checklist</h2>
 <div class="content">
-<iframe loading="lazy" src="Extractor.html" title="Extractor"></iframe>
+<iframe loading="lazy" src="extractor_tuesday.html" title="Extractor"></iframe>
 </div>
 </div>
 </div>
@@ -2704,7 +2961,7 @@ document.addEventListener('DOMContentLoaded', function(){
 </div>
 <div class="ritem"><input class="narrow-input" placeholder="Name" type="text"/></div>
 </div>
- <!-- unnumbered -->
+<!-- unnumbered -->
 <div class="item item-grid">
 <div class="ltxt">
 <div class="item-label">Concluding Comments</div><div class="item-time">(3 min.)</div>
@@ -2719,7 +2976,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="accent" style="background-color:#374151"></div>
 <h2 style="color:#111827">Media Checklist</h2>
 <div class="content">
-<iframe loading="lazy" src="Extractor.html" title="Extractor"></iframe>
+<iframe loading="lazy" src="extractor_tuesday.html" title="Extractor"></iframe>
 </div>
 </div>
 </div>
@@ -2843,7 +3100,6 @@ document.addEventListener('DOMContentLoaded', function(){
   } catch(e) { /* silently ignore */ }
 })();
 </script>
-
 <script id="strict-remove-old-weeks">
 (function() {
   const TARGET_IDS = new Set(["week-2025-09-29","week-2025-10-06","week-2025-10-13"]);
@@ -2931,5 +3187,126 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 })();
 </script>
-</body>
+<script>
+(function() {
+  const KEY = "tuesday_congregation_header_text";
+  const el = document.getElementById("congHeader");
+  if (!el) return;
+
+  // Apply saved value (or default) at startup
+  try {
+    const saved = localStorage.getItem(KEY);
+    const fallback = 'Chatsworth Sign Language Congregation';
+    const current = (saved && saved.trim()) ? saved : fallback;
+    // Replace only the text portion before the first <br/>
+    const parts = el.innerHTML.split("<br");
+    parts[0] = current;
+    el.innerHTML = parts.join("<br");
+  } catch (e) {}
+
+  // Make editable on double click
+  let originalText = null;
+
+  function getCurrentText() {
+    return el.innerHTML.split("<br")[0];
+  }
+
+  function setCurrentText(t) {
+    const parts = el.innerHTML.split("<br");
+    parts[0] = t;
+    el.innerHTML = parts.join("<br");
+  }
+
+  el.addEventListener("dblclick", () => {
+    originalText = getCurrentText();
+    el.setAttribute("contenteditable", "true");
+    el.setAttribute("aria-label", "Edit congregation header");
+    el.focus();
+
+    // Select all text for quick editing
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+
+  function finishEdit(save) {
+    el.removeAttribute("contenteditable");
+    if (save) {
+      const text = getCurrentText().trim() || originalText || "";
+      setCurrentText(text);
+      try { localStorage.setItem(KEY, text); } catch (e) {}
+    } else if (originalText != null) {
+      setCurrentText(originalText);
+    }
+    originalText = null;
+  }
+
+  // Save on blur
+  el.addEventListener("blur", () => finishEdit(true));
+
+  // Keyboard shortcuts while editing
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // prevent new line
+      finishEdit(true);
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      finishEdit(false);
+    }
+  });
+})();
+</script>
+<script id="tuesday-inline-date-script">
+(function(){
+  function startOfWeekMonday(d){
+    const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const day = (x.getDay() + 6) % 7; // 0=Mon
+    x.setDate(x.getDate() - day);
+    x.setHours(0,0,0,0);
+    return x;
+  }
+  function formatLong(d){
+    try {
+      return new Intl.DateTimeFormat(undefined, { weekday:'long', month:'long', day:'numeric', year:'numeric' }).format(d);
+    } catch(e){
+      const m = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      const w = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+      return w[d.getDay()] + ", " + m[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+    }
+  }
+  const now = new Date();
+  const monday = startOfWeekMonday(now);
+  const tuesday = new Date(monday);
+  tuesday.setDate(monday.getDate() + 1);
+  const el = document.getElementById('weekDate');
+  if (el) { el.textContent = formatLong(tuesday) + " ~ 7:00 PM"; }
+})();
+</script><script id="tuesday-weekdate-56">
+(function(){
+  function startOfWeekMonday(d){
+    const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const day = (x.getDay() + 6) % 7; // 0 = Monday
+    x.setDate(x.getDate() - day);
+    x.setHours(0,0,0,0);
+    return x;
+  }
+  function formatLong(d){
+    try {
+      return new Intl.DateTimeFormat(undefined, { weekday:'long', month:'long', day:'numeric', year:'numeric' }).format(d);
+    } catch(e){
+      const m = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      const w = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+      return w[d.getDay()] + ", " + m[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+    }
+  }
+  const now = new Date();
+  const monday = startOfWeekMonday(now);
+  const tuesday = new Date(monday);
+  tuesday.setDate(monday.getDate() + 1); // Tuesday of current week (rolls at Monday 00:00)
+  const el = document.getElementById('weekDateTuesday');
+  if (el) { el.textContent = formatLong(tuesday) + " ~ 7:00 PM"; }
+})();
+</script></body>
 </html>
